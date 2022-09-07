@@ -68,9 +68,11 @@ def equal(u,v):
     False
     """
     assert u.D == v.D
-    pass
-    for i in u.f:
-        range()
+
+    for i in u.D:
+        if getitem(u, i) != getitem(v, i):
+            return False
+    return True
 
 def add(u,v):
     """
