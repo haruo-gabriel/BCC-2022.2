@@ -55,7 +55,6 @@ int collatz (int n){
     }
 
     return cont;
-
 }
 
 void num_pasCSV(int start, int end, int *observacoes){
