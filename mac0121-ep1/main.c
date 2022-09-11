@@ -9,17 +9,22 @@
 
 #include <stdio.h>
 
-// Protótipos
-long int collatz (int n);
+int collatz (int);
+int ehPotDe2 (int, int *);
 
-// Funções
 int main (){
-	long int i, f, num, passos, pot2=2, contPot2=0;
+	int i, f, num, passos, pot2, contPot2;
 	
     printf("Digite o primeiro número do intervalo: ");
-    scanf("%ld", &i);
+    scanf("%d", &i);
     printf("Digite o último número do intervalo: ");
-    scanf("%ld", &f);
+    scanf("%d", &f);
+
+	// Verifica se há uma potência de 2 entre [i, f]
+	pot2 = i;
+  	while (pot2 < f && !ehPotDe2(pot2, &contPot2))
+    	pot2++;
+  	contPot2--;
 
     for (num = i; num <= f; num++){
 		// Verifica se n é potência de 2
@@ -32,13 +37,13 @@ int main (){
 		else
         	passos = collatz(num);
 
-		printf("Número: %ld - Passos: %ld\n", num, passos);
+		printf("Número: %d - Passos: %d\n", num, passos);
 	}
 
     return 0;
 }
 
-long int collatz (int n){
+int collatz (int n){
     int cont = 0;
 
 	while (n != 1){
@@ -52,4 +57,17 @@ long int collatz (int n){
 		}
 	}
 	return cont;
+}
+
+int ehPotDe2(int n, int *contPot2) {
+  	*contPot2 = 0;
+
+  	while (n != 1) {
+    	if (n % 2 != 0)
+      		return 0;
+    	n /= 2;
+    	*contPot2 = *contPot2 + 1;
+  	}
+
+  	return 1;
 }
