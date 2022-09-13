@@ -1,39 +1,58 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/* Declaração dos protótipos */
-int modoZero (int n);
-int modoUm (int n);
-int ehprimo (int n);
+int modo0 (int n);
+void modo1 (int n);
+int ehPrimo (int n);
 
-/* Funções */
+
 int main (){
+	int modo, n;
 
+	scanf("%d", &modo);
+	scanf("%d", &n);
+
+	if (modo == 0)
+		printf("%d\n", modo0(n));
+	
+	else if (modo == 1)
+		modo1(n);
+
+	return 0;	
 }
 
-int modoZero (int n){
-/* Retorna o próximo primo */
+int modo0 (int n){
+// Retorna o próximo primo.	
+	int i;
 
-	for (i = n; i > n; i++)
-		if (ehprimo(i))
-				return i;
-
-}
-
-
-int *modoUm (int n, int *fator1, int *fator2){
-/* Retorna 1 caso existam os dois primos ou 0 caso contrário */
-
-	int i, j;
-	int fatores[2];
-	for (i = 2; i < ; i++)
+	for (i = n + 1;; i++)
 		if (ehPrimo(i))
-			for (j = 2; j < ; j++)
-				if (ehPrimo(j))
-					if (n == i * j)
-						fatores[0] = i; fatores[1] = j;
-						return fatores;
-									
-
+			return i;
 }
 
+
+void modo1 (int n){
+// Caso n seja produto de dois primos, imprime-os.
+// Caso contrário, há saída. 
+	int i, j, stop;
+	stop = 0;
+
+	for (i = 2; !stop && ehPrimo(i) && i <= n/2; i++){
+		for (j = n/2; !stop && ehPrimo(j) && j >= 2; j--){
+			if (i*j == n){
+				printf("%d %d\n", i, j);
+				stop = 1;
+			}
+		}
+	}
+}
+
+int ehPrimo (int n){
+	int i;
+
+	for (i = 2; i <= n/2; i++)
+		if (n % i == 0)
+			return 0;
+
+	return 1;
+}
