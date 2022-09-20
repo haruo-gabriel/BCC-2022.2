@@ -48,7 +48,7 @@ _popInt: ; Prints the digits stored on the stack
     mov rcx, [digitSpacePosition]
     dec rcx
     mov [digitSpacePosition], rcx
-
+        
     cmp rcx, digitSpace
     jge _popInt
 
