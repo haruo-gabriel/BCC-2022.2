@@ -222,7 +222,8 @@ def matrix_matrix_mul(A, B):
     True
     """
     assert A.D[1] == B.D[0]
-    pass
+
+    return Mat((A.D[0], B.D[1]),{(a0,b1):Vec(A.D[1], {a1:A[a0,a1] for a1 in A.D[1]})*Vec(B.D[0], {b0:B[b0,b1] for b0 in B.D[0]}) for a0 in A.D[0] for b1 in B.D[1]})
 
 ################################################################################
 
