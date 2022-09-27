@@ -11,20 +11,30 @@ int ** alocaMatriz (int lin, int col) {
 
 void liberaMatriz (int ** mat, int lin){
   int i;
-  for (i = 0; i < lin; i++) free(mat[i]);
+  for (i = 0; i < lin; i++)
+    free(mat[i]);
   free (mat);
 }
 
 void imprimeMatriz (int **a, int m, int n) {
     int i,j;
     for (i = 0; i < m; i++){
-        for (j = 0; j < n; j++) printf("+---");
-        printf("+\n");
-        for (j = 0; j <n; j++)
-          if(a[i][j] != 0) printf("|%3d", a[i][j]);
-            else printf("|   ");
-        printf("|\n");
+      for (j = 0; j < n; j++)
+        printf("+---");
+      printf("+\n");
+      for (j = 0; j <n; j++)
+        if(a[i][j] != 0) printf("|%3d", a[i][j]);
+        else printf("|   ");
+      printf("|\n");
     }
-    for (j = 0; j < n; j++) printf("+---");
+    for (j = 0; j < n; j++)
+      printf("+---");
     printf("+\n");
+}
+
+void leMatriz (int **matriz, int linhas, int colunas){
+  int i, j;  
+  for (i = 0; i < linhas; i++)
+    for (j = 0; j < colunas; j++)
+      scanf("%d", &matriz[i][j]);  
 }
