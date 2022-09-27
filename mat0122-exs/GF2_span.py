@@ -15,6 +15,7 @@ def generateCombsLists(turns):
 
 	return allScalarCombsLists[-1]
 
+
 """
 Returns a list of all linear combinations (as lists, too) one size greater
 than the linear combinations of scalarCombsList.
@@ -35,6 +36,7 @@ def appendScalar(scalarCombsList):
 	
 	return supportList
 
+
 """
 Input: a set D of labels and a list L of vectors over GF (2) with label-set D
 Output: the list of all linear combinations of the vectors in L
@@ -53,7 +55,7 @@ def GF2_span(D, L):
 				span.append(addCombs)
 		return span
 		
-
+'''
 def main():
 	# Example input
 	D = {'a', 'b', 'c'}
@@ -62,4 +64,5 @@ def main():
 	print(GF2_span(D,L))
 
 if __name__ == '__main__':
-	main()
+    main()
+'''
