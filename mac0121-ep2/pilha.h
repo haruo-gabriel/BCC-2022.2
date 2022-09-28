@@ -13,27 +13,18 @@ typedef struct {
 typedef palavra item;
 
 typedef struct {
-  item * v; 
+  item * v;
   int topo; 
-  int tam; 
+  int tam;
 } pilha;
-
 
 void empilha (pilha * p, item x); 
 item desempilha (pilha * p); 
 item topoPilha (pilha * p); 
 int pilhaVazia (pilha * p); 
 pilha * resize (pilha * p);
-pilha * cria(int tam); 
-void destroi(pilha * p); 
-
-/* vetor vocabulario que armazena todas as palavras*/
-typedef struct {
-  int tam;
-  int topo;
-  palavra *v;
-} vocab;
+pilha * criaPilha(int tam);
+void destroiPilha(pilha * p);
 
 void lePalavras(palavra *voc, int npal);
 void imprimeVocab(palavra *voc, int npal);
-void destroiVocab(vocab *voc);

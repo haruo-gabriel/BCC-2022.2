@@ -5,7 +5,7 @@
 
 
 /* Funcoes pilha */
-pilha * cria (int tam) {
+pilha * criaPilha (int tam){
   pilha * p = malloc(sizeof(pilha));
   p->tam = tam;
   p->topo = 0;
@@ -15,7 +15,7 @@ pilha * cria (int tam) {
   return p;
 }
 
-void destroi (pilha * p) {
+void destroiPilha (pilha * p) {
   free (p->v);
   free (p);
 }
@@ -58,7 +58,6 @@ pilha * resize (pilha * p) {
 
 
 /* Funcoes palavra-cruzada */
-
 void lePalavras(palavra *voc, int npal){
 	int i;
 	char pal[46];
