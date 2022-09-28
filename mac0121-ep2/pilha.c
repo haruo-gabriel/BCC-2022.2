@@ -9,7 +9,7 @@ pilha * cria (int tam) {
   pilha * p = malloc(sizeof(pilha));
   p->tam = tam;
   p->topo = 0;
-  p->v = malloc (tam * sizeof(item));
+  p->v = malloc(tam * sizeof(item));
   if (p->v == NULL)
 	return NULL;
   return p;
@@ -42,7 +42,6 @@ item topoDaPilha (pilha *p) {
   if (!pilhaVazia(p)){
 	return (p->v[p->topo - 1]);
   }
-  return ERRO
 }
 
 /* dobra o tamanho da pilha */
@@ -60,19 +59,21 @@ pilha * resize (pilha * p) {
 
 /* Funcoes palavra-cruzada */
 
-void lePalavras(palavra *vocab, int npal, int tampal){
+void lePalavras(palavra *voc, int npal){
 	int i;
 	char pal[46];
 
 	for (i = 0; i < npal; i++){
 		scanf("%s", pal);
-		vocab[i]->string = pal
-		vocab[i]->tam = strlen(pal);
-		
+		voc[i].len = strlen(pal);
+		strcpy(voc[i].string, pal);
 	}
 }
 
-void destroiVocab(vocab *voc){
-	free(voc->v);
-	free(voc);
+void imprimeVocab(palavra *voc, int npal){
+	int i;
+	for (i = 0; i < npal; i++){
+		printf("%s\n", voc[i].string);
+		printf("%d\n", voc[i].len);
+	}
 }
