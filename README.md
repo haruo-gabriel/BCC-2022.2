@@ -9,3 +9,4 @@ it includes source codes from:
 - MAC0239 - Lógica e Verificação de Programas
   - EP1: Mastermind
 - MAC0216 - Técnicas de Programação I (trancado)
+  - EP1: Assembly x86_64
