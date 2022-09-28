@@ -1,7 +1,7 @@
 # BCC-2022.2
 all files from the second semester of 2022.
-it includes source codes from:
 
+it includes source codes from:
 - MAT0122 - Álgebra Linear
 - MAC0121 - Algoritmos e Estruturas de Dados I
   - EP1: Conjectura de Collatz
