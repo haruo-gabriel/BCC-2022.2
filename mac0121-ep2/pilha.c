@@ -46,19 +46,19 @@ item topoDaPilha (pilha *p) {
 
 /* dobra o tamanho da pilha */
 pilha * resize (pilha * p) {
-	pilha * q = cria (p->tam * 2);
+	pilha * q = criaPilha (p->tam * 2);
 	int i;
 	for (i = 0; i < p->topo; i++)
 		q->v[i] = p->v[i];
 	q->topo = p->topo;
-	destroi (p);
+	destroiPilha (p);
 	return (q);
 }
 
 
 
 /* Funcoes palavra-cruzada */
-void lePalavras(palavra *voc, int npal){
+void lePalavras(pal *voc, int npal){
 	int i;
 	char pal[46];
 
@@ -69,10 +69,27 @@ void lePalavras(palavra *voc, int npal){
 	}
 }
 
-void imprimeVocab(palavra *voc, int npal){
+void imprimeVocab(pal *voc, int npal){
 	int i;
 	for (i = 0; i < npal; i++){
 		printf("%s\n", voc[i].string);
 		printf("%d\n", voc[i].len);
 	}
 }
+
+void ordenaVocab (pal *voc, int npal){
+	int i, j;
+	pal chave;
+   
+	for (i = 1; i < npal; i++) {
+    	chave = voc[i];
+    	j = i - 1;
+
+    	while (j >= 0 && voc[j].len > chave.len) {
+      		voc[j + 1] = voc[j];
+      		j = j - 1;
+    	}
+
+    	voc[j + 1] = chave;
+  	}
+}	

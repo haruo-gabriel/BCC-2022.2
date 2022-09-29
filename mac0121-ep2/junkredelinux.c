@@ -1,96 +1,64 @@
 #include <stdio.h>
 #include "pilha.h"
 
+/* Pseudocodigo 
+Checa se a celula da matriz admite palavras na horizontal
+
+Checa se a celula da matriz 
+*/
+
 int cruzada(char **matriz, int linhas, int colunas, pilha *pilhaPalavras){
-	palavra pal;
-	int i, j, espacoLivre, ok;
+	pal pal;
+	int i, j, espacoLivre;
 	int linhaAtual, colunaAtual;
 
-	ok = 1;
-	
-	while(ok){
+    while (linhaAtual < linhas && colunaAtual < colunas){
+		iif (admitePalavraHorizontal())
 
+		
 	}
 
-    for (i = 0; i < linhas; i++){
-	    for (j = 0; j < colunas; j++){
-            /* Checa se a celula da matriz admite palavras na vertical e/ou horizontal */
-			posicaoValida = posicaoValida(matriz, i, j, linhas, colunas);
-
-			if (!posicaoValida)
-				
-
-			if (posicaoValida == 1){
-
-			}
-
-			if (posicaoValida == 2){
-
-			}
-
-			if (posicaoValida == 3){
-
-			}
-
-
-
-			if (posicaoValidaHorizontal(matriz, i, j)){
-				espacoLivre = contaEspacoHorizontal(matriz, i, j);
-				pal = procuraPalavra(matriz, espacoLivre);
-				inserePalavraHorizontal(matriz, i, j, pal);
-				empilha(pilhaPalavras, pal);
-
-			}
-
-        }
-    }
 }
 
 
-
-/* Verifica se a celula da matriz admite palavra verticalmente e/ou horizontalmente
-return 0 -> invalido tanto pra horizontal quanto pra vertical
-return 1 -> valido apenas pra horizontal
-return 2 -> valido apenas pra vertical
-return 3 -> valido tanto pra horizontal quanto pra vertical; */
-int posicaoValida (char **matriz, int linhaAtual, int colunaAtual, int linhas, int colunas){
-	int hor = 0, ver = 0;
-	if (colunaAtual != colunas && matriz[linhaAtual][colunaAtual] != '*' && matriz[linhaAtual][colunaAtual+1] != '*')
-		hor = 1;
-	if (linhaAtual != linhas && matriz[linhaAtual][colunaAtual] != '*' && matriz[linhaAtual+1][colunaAtual] != '*')
-		ver = 2;
-	
-	return (hor + ver)
-}
-
-/* Deprecated*/
-/* Verifica se a celula da matriz admite palavra horizontalmente */
-int posicaoValidaHorizontal (char **matriz, int linhaAtual, int colunaAtual, int colunas){
-	if (colunaAtual == colunas)
+/* Verifica se a célula da matriz admite palavra horizontalmente
+Admite quando:
+- a célula não é um '*' e não está na borda direita
+e
+- a célula da direita não é um '*'
+e
+(
+	- a célula está na borda direita
+	ou
+	- a célula não está na borda direita, mas a célula à esquerda é um '*'
+)
+*/
+int admitePalavraHorizontal (char **matriz, int linhaAtual, int colunaAtual, int colunas){
+	if (matriz[linhaAtual][colunaAtual] != '*' || colunaAtual != colunas){
+		if (matriz[linhaAtual][colunaAtual+1] != '*'){
+			if (colunaAtual == 0)
+				return 1;
+			else{
+				if (matriz[linhaAtual][colunaAtual-1] == '*')	
+					return 1;
+				else
+					return 0;
+			}
+		}
+		else
+			return 0;
+	}
+	else
 		return 0;
-	if (matriz[linha][coluna] != '*' && matriz[linha][coluna+1] != '*')
-		return 1;
-	return 0;
-}
-
-/* Verifica se a celula da matriz admite palavra verticalmente*/
-int posicaoValidaVertical (char **matriz, int linhaAtual, int colunaAtual, int colunas){
-	if (colunaAtual == colunas)
-		return 0;
-	if (matriz[linha][coluna] != '*' && matriz[linha+1][coluna] != '*')
-		return 1;
-	return 0;
 }
 
 
-/* Conta o espaco disponivel na linha ate um -1 ou ate a linha acabar */
+/* Conta o espaço disponível desde a célula atual até um '*' ou até a linha acabar */
 int contaEspacoHorizontal (char **matriz, int linhaAtual, int colunaAtual, int colunas){
     int j, tamanho;
-    
-    tamanho = 2;
-
-    for (j = colunaAtual+2; j < colunas; j++){
-        if (matriz[linhaAtual][j] == -1)
+    tamanho = 1;
+    for (j = colunaAtual; j < colunas; j++){
+        if (matriz[linhaAtual][j] == '*')
 			break;
 		tamanho++;
 	}
@@ -98,27 +66,23 @@ int contaEspacoHorizontal (char **matriz, int linhaAtual, int colunaAtual, int c
 	return tamanho;
 }
 
-/* Procura uma palavra com um tamanho especifico no array vocabulario */
-int procuraPalavra (int tamanhoLivre, palavra *vocabulario, int nPalavras, palavra *){
-	int i;
-	for (i = 0; i < nPalavras; i++ ){
-		if (vocabulario[i].len == tamanhoLivre){
-			vocabulario[i].naPilha = 1;
-			return vocabulario[i];
+/* Procura uma palavra com um tamanho específico no array vocabulario */
+pal *procuraPalavraHorizontal (char **matriz, int linhaAtual, int colunaAtual, int colunas, int tamanhoLivre, palavra *voc, int nPalavra, pal *pal){
+	int k, j;
+	pal p;
+
+	/* Procura todas as palavras com tamanho igual ao tamanhoLivre */
+	for (k = 0; k < nPalavra; k++){
+		if (voc[k].len == tamanhoLivre){
+			/* Verifica se a palavra encaixa no espaço, letra à letra*/
+			for (j = colunaAtual; j < colunaAtual + tamanhoLivre; j++){
+				if (matriz[linhaAtual][j] != voc[i].string[j])
+					break;
+			}
+			return voc[i];
 		}
-
-		return 
 	}
-}
-
-int palavraEncaixa (char **matriz, palavra pal, int linhaAtual, int colunaAtual, int linhas, int colunas){
-
-}
-
-void encaixaPalavraHorizontal (char **matriz, int LinhaAtual, int colunaAtual, palavra pal){
-	for (j = colunaAtual; j < colunaAtual + pal.len; j++){
-		if (matriz[linhaAtual][j] > 0)
-	}
+	return NULL; 
 }
 
 

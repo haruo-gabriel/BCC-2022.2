@@ -51,22 +51,22 @@ void imprimeMatrizChar (char **a, int m, int n) {
   int i,j;
   for (i = 0; i < m; i++){
     for (j = 0; j < n; j++){
-      printf("%c", m[i][j]);
+      printf("%c ", a[i][j]);
     }
     printf("\n");
   }
 }
 
-/*
+
 void leMatriz (int **matriz, int linhas, int colunas){
   int i, j;  
   for (i = 0; i < linhas; i++)
     for (j = 0; j < colunas; j++)
       scanf("%d", &matriz[i][j]);  
 }
-*/
 
-void leMatriz (char **matriz, int linhas, int colunas){
+
+void leMatrizChar (char **matriz, int linhas, int colunas){
   int i, j, aux;  
   for (i = 0; i < linhas; i++)
     for (j = 0; j < colunas; j++){
@@ -74,18 +74,6 @@ void leMatriz (char **matriz, int linhas, int colunas){
       if (aux == 0)
         matriz[i][j] = '0';
       else
-        matriz[i][j]; = '*';
-    }
-}
-
-/* Transfere os -1's da matriz numerica para a matriz de caracteres como *'s
-s */
-void transfereMatrizMatrizChar(int **matriz, char **matrizChar, int m, int n){
-  for (i = 0; i < m; i++)
-    for (j = 0; j < n; j++){
-      if (matriz[i][j] == -1)
-        matrizChar[i][j] = '*';
-      else
-        matrizChar[i][j] = '0'; 
+        matriz[i][j] = '*';
     }
 }
