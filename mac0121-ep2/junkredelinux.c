@@ -1,23 +1,66 @@
 #include <stdio.h>
 #include "pilha.h"
 
-/* Pseudocodigo 
-Checa se a celula da matriz admite palavras na horizontal
+/* NOTAÇÃO
+linhas => quantidade absoluta de de linhas da matriz
+colunas => quantidade absoluta de colunas da matriz
+linhaA => linha atual
+colunaA => coluna atual
 
-Checa se a celula da matriz 
+pal => palavra
+nPal => número de palavras no vocabulário
+voc => vocabulário/array de todas as palavras
+pilhaPal => pilha de palavras
+
+tamLiv => tamanho livre para encaixar uma palavra
 */
 
-int cruzada(char **matriz, int linhas, int colunas, pilha *pilhaPalavras){
-	pal pal;
-	int i, j, espacoLivre;
-	int linhaAtual, colunaAtual;
 
-    while (linhaAtual < linhas && colunaAtual < colunas){
-		iif (admitePalavraHorizontal())
 
-		
+/* PENDENCIAS
+
+- verificar se linhaA e colunaA devem ser declarados como ponteiros
+- verificar se a pilha deve ser de palavras ou de ponteiros pras palavras do array
+- verificar se é possível ajustar todas as funções para elas servirem tanto para a horizontal quanto para a vertical
+- verificar se, para a primeira palavra, fazer a busca no main 
+- arrumar pseudocódigo
+
+*/
+
+
+
+int cruzadaH (char **matrizH, char **matrizV, int linhaA, int colunaA, int linhas, int colunas, pal *voc, pilha *pilhaP){
+	int espacoLivre;
+	pal *p;
+
+
+	if (linhaA == linhas && colunaA == colunas)
+		return 1;
+
+	if (admitePalH(matrizH, linhaA, colunaA, colunas)){
+		espacoLivre = contaEspH(matrizH, linhaA, colunaA, colunas);
+		p = procuraPalH(matrizH, matrizV, linhaA, colunaA, colunas, tamLiv, voc, nPal);
+		if (p != NULL){
+			empilha(pilhaP, *p);
+			encaixaPalH();
+			incInds(&linhaA, &colunaA, linhas, colunas);
+
+			return cruzadaV(matrizH, matrizV, linhaA, colunaA);
+		}
+		else{
+			if (pilhaVazia(pilhaP))
+				return 0;
+			else{
+				palavra = desempilha(pilhaP);
+				deletaPalMatriz ();
+				saltaInds(&linhaA, &colunaA, linhas, colunas);
+
+				return cruzadaV(matrizH, matrizV, linhaA, colunaA);
+			}
+		}
 	}
-
+	else
+		return cruzadaV();
 }
 
 
@@ -33,13 +76,13 @@ e
 	- a célula não está na borda direita, mas a célula à esquerda é um '*'
 )
 */
-int admitePalavraHorizontal (char **matriz, int linhaAtual, int colunaAtual, int colunas){
-	if (matriz[linhaAtual][colunaAtual] != '*' || colunaAtual != colunas){
-		if (matriz[linhaAtual][colunaAtual+1] != '*'){
-			if (colunaAtual == 0)
+int admitePalH (char **matrizH, int linhaA, int colunaA, int colunas){
+	if (matriz[linhaA][colunaA] != '*' && colunaA != colunas){
+		if (matriz[linhaA][colunaA+1] != '*'){
+			if (colunaA == 0)
 				return 1;
 			else{
-				if (matriz[linhaAtual][colunaAtual-1] == '*')	
+				if (matriz[linhaA][colunaA-1] == '*')	
 					return 1;
 				else
 					return 0;
@@ -53,103 +96,71 @@ int admitePalavraHorizontal (char **matriz, int linhaAtual, int colunaAtual, int
 }
 
 
-/* Conta o espaço disponível desde a célula atual até um '*' ou até a linha acabar */
-int contaEspacoHorizontal (char **matriz, int linhaAtual, int colunaAtual, int colunas){
-    int j, tamanho;
-    tamanho = 1;
-    for (j = colunaAtual; j < colunas; j++){
-        if (matriz[linhaAtual][j] == '*')
+/* Conta o espaço horizontal disponível desde a célula atual até um '*' ou até a linha acabar */
+int contaEspH (char **matrizH, int linhaA, int colunaA, int colunas){
+    int j, tamanho = 1;
+
+    for (j = colunaA; j < colunas; j++){
+        if (matriz[linhaA][j] == '*')
 			break;
 		tamanho++;
 	}
-
 	return tamanho;
 }
 
-/* Procura uma palavra com um tamanho específico no array vocabulario */
-pal *procuraPalavraHorizontal (char **matriz, int linhaAtual, int colunaAtual, int colunas, int tamanhoLivre, palavra *voc, int nPalavra, pal *pal){
-	int k, j;
+/* Procura uma palavra com um tamanho específico no array vocabulario para inserí-la horizontalmente */
+pal *procuraPalH (char **matrizH, char **matrizV, int linhaA, int colunaA, int colunas, int tamLiv, palavra *voc, int nPal){
+	int k, j, encaixa = 1;
 	pal p;
 
-	/* Procura todas as palavras com tamanho igual ao tamanhoLivre */
-	for (k = 0; k < nPalavra; k++){
-		if (voc[k].len == tamanhoLivre){
-			/* Verifica se a palavra encaixa no espaço, letra à letra*/
-			for (j = colunaAtual; j < colunaAtual + tamanhoLivre; j++){
-				if (matriz[linhaAtual][j] != voc[i].string[j])
-					break;
+	/* Procura todas as palavras com tamanho igual ao tamLiv */
+	for (k = 0; k < nPal; k++){
+		if (voc[k].len == tamLiv){
+			for (j = colunaA; j < colunaA + tamLiv && encaixa; j++){
+				if (matrizV[linhaA][j] != '0' && voc[k].string[j] != matrizV[linhaA][j] && voc[k].naPilha != 0) 
+					encaixa = 0;
 			}
-			return voc[i];
+
+			if (encaixa){
+				voc[k].naPilha = 1;
+				voc[k].posicao[0] = linhaA;
+				voc[k].posicao[1] = colunaA;		
+				voc[k].direcao = 0;		
+				return voc[k]; /* ou é return &voc[k]? voc[k] é um pointer? */
+			}
 		}
-	}
-	return NULL; 
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Muda os valores das celulas da matriz que serao ocupadas pela palavra
-e atualiza a posicao da palavra */
-void encaixaPalavraColuna(int **matriz){
-
-	p = procuraPalavra(tamanhoLivre, )
-
-	for (i = linhaAtual; i < linhaAtual + tamanhoLinha; i++){
+		else if (voc[k].len > tamLiv)
+			return NULL;
 	}
 
+	return NULL;
 }
 
-/* Conta o espaco disponivel na coluna ate um -1 ou ate a coluna acabar */
-int contaTamanhoColuna(int **matriz, int linhas, int linhaAtual, int colunaAtual){
-    int i, tamanho;
-    
-    tamanho = 0;
+void deletaPalMatriz (){
 
-    for (i = linhaAtual; i < linhas; i++)
-        if (matriz[i][colunaAtual] != -1){
-            tamanho++;
-			break
-		}
-
-	return tamanho;
 }
 
+/* Muda os índices i, j que percorrem a matriz para a posição da palavra desempilhada no caso de backtracking */
+void saltaInds (int *linhaA, int *colunaA, intint linhas, int colunas, pal *p){
+	
+}
 
+void incInds (int *linhaA, int *colunaA, int linhas, int colunas){
+	/* Caso final - percorreu toda a matriz */
+	if (*linhaA == linhas - 1 && *colunaA == colunas - 1){
+		*linhaA = linhas;
+		*colunaA = colunas;
+	}
 
+	else{
+		if (*linhaA == linhas - 1)
+			*linhaA = 0;
+		else
+			*linhaA++;
 
-
-
-
-/* Percorrendo a matriz linha a linha */
-for (i = 0; i < m; i++){
-	for (j = 0; j < n; j++){
-		if (matriz[i][j] == 0){ /* Procedimento para o primeiro caso de matriz[i][j] == 0 */
-			if (j < n - 1 && matriz[i][j+1] == 0){
-				tamanhoLinha = contaTamanhoLinha(matriz, n, i, j);
-				
-				encaixaPalavraLinha(tamanhoLinha);
-
-				for (l = j; l < j + tamanhoLinha; l++){
-					contaTamanhoColuna()
-					encaixaPalavraColuna()
-					procuraPalavra()
-				}
-
-			}
-			else if (i < m - 1 && matriz[i+1][j] == 0){
-				tamanhoColuna = contaTamanhoColuna(matriz, m, i, j);
-			}
-		}
+		if (*colunaA == colunas - 1)
+			*colunaA = 0;
+		else
+			*colunaA++;
 	}
 }

@@ -4,69 +4,69 @@
 #include "matriz.h"
 #include "pilha.h"
 
-/* Como compilar:
-
+/* COMO COMPILAR
 gcc -Wall -ansi -pedantic -O2 main.c pilha.c matriz.c -o a
 
+quando houver apenas os arquivos necessários,
+gcc -Wall -ansi -pedantic -O2 *.c -o a
+
+./a
+*/
+
+/* NOTAÇÃO
+voc => vocabulário - array dos inputs das palavras
 */
 
 int main(){
     int instancia = 1;
 
-    while(1){ /* colocar conteudo dentro do while */ }
-
-    int m, n, p; /* m: numero de linhas, n: numero de colunas, p: numero de palavras */
-    char **matriz;
-    /*
-    Legenda da matriz:
-        - celula com -1: espaco indisponivel
-        - celula com 0: espaco virgem
-        - celula com 1: espaco ocupado com palavra horizontalmente
-        - celula com 2: espaco ocupado com palavra verticalmente
-        - celula com 3: espaco ocupado com palavra horizontalmente e verticalmente
-    */
-    pal *vocabulario; /* vetor de palavras */
-    pilha *pilhaPalavras;
+    while(1){
+        int m, n, p;
+        char **matrizH; char **matrizV;
+        pal *voc;
+        pilha *pilhaP;
 
 
-    /* INPUT DO USUARIO */
-    scanf("%d %d", &m, &n);
-    if (m == 0 && n == 0)
-        break;
-    
-    /* Alocacao da matriz */
-    matriz = alocaMatrizChar(m, n);
-    leMatrizChar(matriz, m, n);
-    imprimeMatrizChar(matriz, m, n);
+        /* INPUT DO USUARIO */
+        scanf("%d %d", &m, &n);
+        if (m == 0 && n == 0)
+            break;
+        
+        /* Alocacao das matrizes */
+        matrizH = alocaMatrizChar(m, n);
+        matrizV = alocaMatrizChar(m, n);
+        leMatrizChar(matriz, m, n);
+        imprimeMatrizChar(matriz, m, n);
 
-    /* Alocacao da matriz de caracteres 
-    matrizChar = alocaMatrizChar(m, n);
-    transfereMatrizMatrizChar(matriz, matrizChar, m, n);
-    */
+        /* Alocacao do voc */
+        scanf("%d", &p);
+        voc = malloc(p * sizeof(pal));
+        lePalavras(voc, p);
+        ordenaVocab(voc, p);
+        imprimeVocab(voc, p);
 
-    /* Alocacao do array de palavras */
-    scanf("%d", &p);
-    vocabulario = malloc(p * sizeof(pal));
-    lePalavras(vocabulario, p);
-    ordenaVocab(vocabulario, p);
-    imprimeVocab(vocabulario, p);
-
-    /* Criacao da pilha */
-    pilhaPalavras = criaPilha(p);
+        /* Criacao da pilha */
+        pilhaPalavras = criaPilha(p);
 
 
-    cruzada();
-    
+        haSolucao = cruzadaH(matrizH, matrizV, linhaA, colunaA, m, n);
 
 
-    /* Impressao */
-    printf("Instância %d:\n", instancia);
-    imprimeMatrizChar(matriz, m, n);
+        /* FINALIZACAO DA RODADA*/
+        printf("Instância %d:\n", instancia);
+        if (haSolucao){
+			mesclaMatrizChar(matrizH, matrizV, m, n);
+            imprimeMatrizChar(matrizH, m, n);
+		}
+        else
+            printf('nao ha solucao\n');
 
-    /* FINALIZACAO DA RODADA*/
-    destroiPilha(pilhaPalavras);
-    free(vocabulario);
-    liberaMatrizChar(matriz, m);
+        destroiPilha(pilhaP);
+        free(voc);
+        liberaMatrizChar(matrizH, m);
+		liberaMatrizChar(matrizV, m);
+    }
+
 
     return 0;
 }

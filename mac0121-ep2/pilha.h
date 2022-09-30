@@ -1,16 +1,15 @@
 #define ERRO '\0'
 
 typedef struct {
-  int len;
-  int naPilha;
-  int direcao; /* 0 para horizontal e 1 para vertical */
-  int pini[2]; /* coordenadas (linha, coluna) da primeira letra da pal */
-  int pfim[2]; /* coordenadas (linha, coluna) da ultima letra da pal */
   /*char *string;*/
   char string[46];
+  int len;
+  int naPilha;
+  int posicao[2]; /* coordenadas (linha, coluna) da primeira letra da pal */
+  int direcao; /* 0 para horizontal e 1 para vertical */
 } pal;
 
-typedef pal item;
+typedef *pal item; /* Será uma pilha de ponteiros para as palavras do voc */
 
 typedef struct {
   item * v;
@@ -26,6 +25,3 @@ pilha * resize (pilha * p);
 pilha * criaPilha (int tam);
 void destroiPilha (pilha * p);
 
-void lePalavras(pal *voc, int npal);
-void imprimeVocab(pal *voc, int npal);
-void ordenaVocab (pal *voc, int npal);
