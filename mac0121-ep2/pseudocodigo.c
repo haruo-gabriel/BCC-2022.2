@@ -1,4 +1,4 @@
-/* Pseudocodigo
+/* FIXME Pseudocodigo
 
 se a célula da matriz == (linhas, colunas)
 	return 1

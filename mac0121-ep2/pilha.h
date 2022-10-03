@@ -9,7 +9,7 @@ typedef struct {
   int direcao; /* 0 para horizontal e 1 para vertical */
 } pal;
 
-typedef *pal item; /* Será uma pilha de ponteiros para as palavras do voc */
+typedef pal *item; /* Será uma pilha de ponteiros para as palavras do voc */
 
 typedef struct {
   item * v;
@@ -17,7 +17,7 @@ typedef struct {
   int tam;
 } pilha;
 
-void empilha (pilha * p, item x); 
+void empilha (pilha * p, item x);
 item desempilha (pilha * p); 
 item topoPilha (pilha * p); 
 int pilhaVazia (pilha * p); 
