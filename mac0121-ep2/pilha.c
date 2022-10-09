@@ -58,26 +58,26 @@ pilha * resize (pilha * p) {
 
 
 /* Funcoes palavra-cruzada */
-void lePalavras(pal *voc, int npal){
+void lePalavras(pal *voc, int npal, FILE **input){
 	int i;
 	char pal[46];
 
 	for (i = 0; i < npal; i++){
-		scanf("%s", pal);
+		fscanf(*input, "%s", pal);
 		voc[i].len = strlen(pal);
 		strcpy(voc[i].string, pal);
 	}
 }
 
-void imprimeVocab(pal *voc, int npal){
+void imprimeVoc(pal *voc, int npal){
 	int i;
 	for (i = 0; i < npal; i++){
-		printf("%s\n", voc[i].string);
-		printf("%d\n", voc[i].len);
+		printf("VOCABULARIO\n");
+		printf("%d %s %d\n", voc[i].posvoc, voc[i].string, voc[i].len);
 	}
 }
 
-void ordenaVocab (pal *voc, int npal){
+void ordenaVoc(pal *voc, int npal){
 	int i, j;
 	pal chave;
    

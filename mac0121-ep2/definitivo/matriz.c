@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-char ** alocaMatriz (int lin, int col) {
+char **alocaMatriz (int lin, int col) {
 	char ** mat = malloc (lin * sizeof(char *));
 	int i;
 	for (i = 0; i < lin; i++)
@@ -29,12 +29,11 @@ void imprimeMatriz (char **a, int m, int n) {
 	}
 }
 
-void leMatriz (char **matrizH, char **matrizV, int linhas, int colunas, FILE **input){
+void leMatriz (char **matrizH, char **matrizV, int linhas, int colunas){
 	int i, j, aux; 
 	for (i = 0; i < linhas; i++)
 		for (j = 0; j < colunas; j++){
-			fscanf(*input, "%d", &aux);
-			/*scanf("%d", &aux);*/
+			scanf("%d", &aux);
 			if (aux == 0){
 				matrizH[i][j] = '0';
 				matrizV[i][j] = '0';
