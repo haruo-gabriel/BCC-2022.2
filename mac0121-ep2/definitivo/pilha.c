@@ -32,6 +32,7 @@ item desempilha (pilha *pil) {
 	pil->topo --;
 	return (pil->v[pil->topo]);
   }
+  return NULL;
 }
 
 int pilhaVazia (pilha *pil) {
@@ -42,6 +43,7 @@ item topoDaPilha (pilha *pil) {
   if (!pilhaVazia(pil)){
 	return (pil->v[pil->topo - 1]);
   }
+  return NULL;
 }
 
 pilha *resize (pilha *pil) {

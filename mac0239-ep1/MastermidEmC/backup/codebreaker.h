@@ -1,10 +1,11 @@
+#include <stdio.h>
+
 #ifndef CODEBREAKER_H
 #define CODEBREAKER_H
 
-
 #define MAX_CLAUSES 2000
-#define SOLVER_CALL "./minisat"
-#define SOLVER_RESP "/tmp/solver_resp.txt"
+#define SOLVER_CALL "../minisat"
+#define SOLVER_RESP "/tmp"
 
 struct CLAUSE {
   int nLits;

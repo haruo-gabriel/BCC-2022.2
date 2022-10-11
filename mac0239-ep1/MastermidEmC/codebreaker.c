@@ -83,6 +83,8 @@ int  convert_feedback(int *feedback) {
         by the last guess.
         Returns True if won the game, False otherwise.
   */
+
+  // Verifica se feedback == codigo
   int count = 0, i;
   for( i=0; i < _breaker.nslots; i++ ) 
     if( feedback[i] ) 

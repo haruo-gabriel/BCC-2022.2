@@ -1,5 +1,6 @@
 #include <stdlib.h>
 
+#include "codebreaker.h"
 #include "codemaker.h"
 
 struct CODIGO _codigo;
@@ -28,8 +29,20 @@ int* codemaker_feedback( int* guess) {
   int* feedback_answer;
   
   feedback_answer = malloc( _codigo.nslots*sizeof(int) );
+  
   for( int i=0; i<_codigo.nslots; i++ ) {
-    feedback_answer[i] = (guess[i] == _codigo.codigo[i]);
+    if (guess[i] == _codigo.codigo[i])
+      feedback_answer[i] = 1;
+    
+    else{
+      feedback_answer[i] = 0;
+      for (int j = 0; j < _codigo.nslots; j++){
+        if (guess[j] == _codigo.codigo[j]){
+          feedback_answer[i] = 2;
+          break;
+        }
+      }
+    }
   }
   //printf("Feedback: ");
   //printCodigo( feedback_answer, _codigo.nslots );
