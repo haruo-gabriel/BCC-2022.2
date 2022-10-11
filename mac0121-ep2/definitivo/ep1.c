@@ -9,10 +9,6 @@
 > ./a
 */
 
-/*
-
-*/
-
 
 /* DECLARAÇÃO DOS PROTÓTIPOS */
 int cruzada (int direcao, char **matrizH, char **matrizV, int *linAtual, int *colAtual, int linhas, int colunas, int nPal, pal *voc, pal *palAntes, pilha *pilhaPal);
@@ -26,18 +22,19 @@ void incInds (int *linAtual, int *colAtual, int linhas, int colunas);
 
 
 
-/* DECLARAÇÃO DAS FUNÇÕES */
 
 /* NOTAÇÃO
 - char **matrizH: matriz para armazenar as palavras horizontalmente.
 - char **matrizV: matriz para armazenar as palavras verticalmente.
 */
+
+/* DECLARAÇÃO DAS FUNÇÕES */
 int main(){
     int instancia = 1;
 
     while(1){
-        int i, m, n, p, haSolucao;
-        int linAtual, colAtual;
+        int m, n, p;
+        int i, linAtual, colAtual, haSolucao;
         char **matrizH, **matrizV;
         pal *voc; pal *palAntes;
         pilha *pilhaPal;
@@ -64,19 +61,20 @@ int main(){
         /* Criacao da pilha */
         pilhaPal = criaPilha(p);
 
-        /* SOLUÇÃo */
-		linAtual = colAtual = 0; palAntes = NULL;
-
+        /* SOLUÇÃO */
+		linAtual = colAtual = 0;
+		palAntes = NULL;
         haSolucao = cruzada(0, matrizH, matrizV, &linAtual, &colAtual, m, n, p, voc, palAntes, pilhaPal);
 
-        /* FINALIZACAO DA RODADA*/
-        printf("Instancia %d:\n", instancia);
+        /* FINALIZACAO DA INSTÂNCIA */
+        printf("Instancia %d\n", instancia);
         if (haSolucao){
 			mesclaMatrizes(matrizH, matrizV, m, n);
             imprimeMatriz(matrizH, m, n);
 		}
         else
             printf("nao ha solucao\n");
+		printf("\n");
 
         destroiPilha(pilhaPal);
         free(voc);
@@ -103,7 +101,7 @@ NOTAÇÃO:
 int cruzada (int direcao, char **matrizH, char **matrizV, int *linAtual, int *colAtual, int linhas, int colunas, int nPal, pal *voc, pal *palAntes, pilha *pilhaPal){
 	int tamLiv, admite; pal *palAtual; item palTopo;
 
-	if (*linAtual == linhas) /* Caso base: se a matriz já foi percorrida por inteiro, há solução */
+	if (*linAtual == linhas) /* Caso base: se a matriz já foi percorrida até o final, há solução */
 		return 1;
 	
 	admite = admitePal(direcao, matrizH, matrizV, *linAtual, *colAtual, linhas, colunas);
@@ -130,7 +128,8 @@ int cruzada (int direcao, char **matrizH, char **matrizV, int *linAtual, int *co
 				deletaPalMat(direcao, matrizH, matrizV, palTopo);
 				saltaInds(linAtual, colAtual, palTopo);
 
-				return cruzada(palTopo->dir, matrizH, matrizV, linAtual, colAtual, linhas, colunas, nPal, voc, palTopo, pilhaPal);	
+				/* Inicia 'cruzada' para a célula da palavra desempilhada */
+				return cruzada(palTopo->dir, matrizH, matrizV, linAtual, colAtual, linhas, colunas, nPal, voc, palTopo, pilhaPal);
 			}
 		}
 	}
@@ -148,7 +147,11 @@ int cruzada (int direcao, char **matrizH, char **matrizV, int *linAtual, int *co
 
 /* Verifica se a célula da matriz admite palavra na vertical ou horizontal.
 Admite palavra na horizontal quando:
-(a célula não é um '*') E (a célula não está na borda direita) E (a célula da direita não é um '*') E ( (a célula está na borda direita) OU (a célula não está na borda direita E a célula à esquerda é um '*') )
+(a célula não é um '*') E (a célula não está na borda direita) E (a célula à direita não é um '*') E ( (a célula está na borda esquerda) OU (a célula não está na borda esquerda E a célula à esquerda é um '*') )
+
+Ex.: |X| | | |*|X| | | |  ->  nessa linha hipotética, as células em X admitem palavra na horizontal
+
+O raciocínio para vertical é análogo.
 */
 int admitePal (int direcao, char **matrizH, char **matrizV, int linAtual, int colAtual, int linhas, int colunas){
 	if (matrizH[linAtual][colAtual] == '*')
@@ -305,7 +308,7 @@ void deletaPalMat (int direcao, char **matrizH, char **matrizV, pal *p){
 } 
 
 
-/* Muda os índices linAtual e colAtual que percorrem a matriz para a posição da palavra desempilhada no caso de backtracking. */
+/* Muda os índices linAtual e colAtual, que percorrem a matriz, para a posição da palavra desempilhada no caso de backtracking. */
 void saltaInds (int *linAtual, int *colAtual, pal *p){
 	*linAtual = p->posmat[0];
 	*colAtual = p->posmat[1];
