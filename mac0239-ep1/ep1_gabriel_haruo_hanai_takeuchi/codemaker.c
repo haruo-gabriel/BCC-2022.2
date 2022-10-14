@@ -12,7 +12,6 @@ void  cria_CodeMaker(int nslots, int ncolors) {
   _codigo.codigo = malloc(nslots*sizeof(int));
 
   // biblioteca <time> usada para randomizar a seed de rand()
-
   time_t t;
   srand(time(&t));
 
