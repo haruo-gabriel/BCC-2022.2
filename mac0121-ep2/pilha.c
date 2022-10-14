@@ -4,76 +4,70 @@
 #include <string.h>
 
 
-/* Funcoes pilha */
-pilha * criaPilha (int tam){
-  pilha * p = malloc(sizeof(pilha));
-  p->tam = tam;
-  p->topo = 0;
-  p->v = malloc(tam * sizeof(item));
-  if (p->v == NULL)
+/* FUNÇÕES PILHA */
+pilha *criaPilha (int tam){
+  pilha *pil = malloc(sizeof(pilha));
+  pil->tam = tam;
+  pil->topo = 0;
+  pil->v = malloc(tam * sizeof(item));
+  if (pil->v == NULL)
 	return NULL;
-  return p;
+  return pil;
 }
 
-void destroiPilha (pilha * p) {
-  free (p->v);
-  free (p);
+void destroiPilha (pilha *pil) {
+  free (pil->v);
+  free (pil);
 }
 
-void empilha (pilha * p, item x) {
-  if (p->topo == p->tam)
-	p = resize (p);
-  p->v[p->topo] = x;
-  p->topo ++;
+void empilha (pilha *pil, item item){
+  if (pil->topo == pil->tam)
+	pil = resize (pil);
+  pil->v[pil->topo] = item;
+  pil->topo ++;
 }
 
-item desempilha (pilha * p) {
-  if (!pilhaVazia (p)){
-	p->topo --;
-	return (p->v[p->topo]);
+item desempilha (pilha *pil) {
+  if (!pilhaVazia (pil)){
+	pil->topo --;
+	return (pil->v[pil->topo]);
   }
+  return NULL;
 }
 
-int pilhaVazia (pilha * p) {
-  return (p->topo == 0);
+int pilhaVazia (pilha *pil) {
+  return (pil->topo == 0);
 }
 
-item topoDaPilha (pilha *p) {
-  if (!pilhaVazia(p)){
-	return (p->v[p->topo - 1]);
+item topoDaPilha (pilha *pil) {
+  if (!pilhaVazia(pil)){
+	return (pil->v[pil->topo - 1]);
   }
+  return NULL;
 }
 
-/* dobra o tamanho da pilha */
-pilha * resize (pilha * p) {
-	pilha * q = criaPilha (p->tam * 2);
+pilha *resize (pilha *pil) {
 	int i;
-	for (i = 0; i < p->topo; i++)
-		q->v[i] = p->v[i];
-	q->topo = p->topo;
-	destroiPilha (p);
-	return (q);
+	pilha *qil = criaPilha(pil->tam * 2);
+	for (i = 0; i < pil->topo; i++)
+		qil->v[i] = pil->v[i];
+	qil->topo = pil->topo;
+	destroiPilha(pil);
+	return (qil);
 }
 
 
 
-/* Funcoes palavra-cruzada */
-void lePalavras(pal *voc, int npal, FILE **input){
+/* FUNÇÕES PALAVRA-CRUZADA */
+
+void lePalavras(pal *voc, int npal){
 	int i;
 	char pal[46];
 
 	for (i = 0; i < npal; i++){
-		fscanf(*input, "%s", pal);
+		scanf("%s", pal);
 		voc[i].len = strlen(pal);
 		strcpy(voc[i].string, pal);
-	}
-}
-
-void imprimeVoc(pal *voc, int npal){
-	int i;
-	for (i = 0; i < npal; i++){
-		printf("VOCABULARIO\n");
-		printf("%d %s %d\n", voc[i].posvoc, voc[i].string, voc[i].len);
 	}
 }
 
