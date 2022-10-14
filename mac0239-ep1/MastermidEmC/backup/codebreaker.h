@@ -3,9 +3,9 @@
 #ifndef CODEBREAKER_H
 #define CODEBREAKER_H
 
-#define MAX_CLAUSES 2000
-#define SOLVER_CALL "../minisat"
-#define SOLVER_RESP "/tmp"
+#define MAX_CLAUSES 1000000
+#define SOLVER_CALL "../minisat/core/minisat"
+#define SOLVER_RESP "/tmp/solver_resp.txt"
 
 struct CLAUSE {
   int nLits;

@@ -1,7 +1,7 @@
 ALL: mastermind run_mastermind_test
 
 run_mastermind_test: mastermind
-	./mastermind 4 7 10
+	./mastermind 4 7 10 
 
 mastermind: mastermind.o jogo.o codemaker.o codebreaker.o
 	gcc -o mastermind mastermind.o jogo.o codemaker.o codebreaker.o

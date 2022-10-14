@@ -1,9 +1,9 @@
 #ifndef CODEBREAKER_H
 #define CODEBREAKER_H
 
-
-#define MAX_CLAUSES 2000
-#define SOLVER_CALL "./minisat"
+#include <stdio.h>
+#define MAX_CLAUSES 1000000
+#define SOLVER_CALL "./minisat/core/minisat"
 #define SOLVER_RESP "/tmp/solver_resp.txt"
 
 struct CLAUSE {
@@ -17,8 +17,8 @@ struct FORMULA {
 };
   
 struct BREAKER {
-  int nslots;
-  int ncolors;
+  int nslots; // 0 até s-1
+  int ncolors; // 0 até c-1
   int* last_guess;
 };
 

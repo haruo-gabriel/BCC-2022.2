@@ -38,18 +38,31 @@ void min_one_color_per_slot() {
   }
 }
 
+// Lineariza slot_color para um literal CNF
 int slot_color_to_var(int slot, int color) {
   return color*_breaker.nslots + slot + 1;
+  // + 1 para ajustar ao formato DIMACS
+
+  /* Supondo 5 cores (0-4) e 3 slots (0-2):
+  0*3 + 0 + 1 = 1: cor 0 no slot 0
+  0*3 + 1 + 1 = 2: cor 0 no slot 1
+  0*3 + 2 + 1 = 3: cor 0 no slot 2
+  .
+  1*3 + 0 + 1 = 4: cor 1 no slot 0
+  1*3 + 1 + 1 = 5: cor 1 no slot 1
+  1*3 + 2 + 1 = 6: cor 1 no slot 2
+  */
 }
 
 void add_clause(int nLits, int* Lits) {
-  int ind = _fml.nclauses;
+  int ind = _fml.nclauses; // Número de cláusulas na fórmula geral
   
   _fml.clauses[ind] = malloc(sizeof(struct CLAUSE));
   _fml.clauses[ind]->nLits = nLits;
   _fml.clauses[ind]->Lits  = Lits;
-  _fml.nclauses++;
-  //printf("%d: ", ind);
+  _fml.nclauses++; // Iterando sobre as cláusulas
+
+  printf("%d ", ind);
   //printClause(_fml.clauses[ind]);
 }
 
@@ -83,7 +96,7 @@ int  convert_feedback(int *feedback) {
         by the last guess.
         Returns True if won the game, False otherwise.
   */
-  int count = 0, i;
+  int count=0, i;
   for( i=0; i < _breaker.nslots; i++ ) 
     if( feedback[i] ) 
       count += 1;
@@ -92,22 +105,29 @@ int  convert_feedback(int *feedback) {
        
   // Generate extra clauses
   int *Lits = malloc( _breaker.nslots * sizeof(int) );
-  for( i=0; i < _breaker.nslots; i++ ) 
+
+  for( i=0; i < _breaker.nslots; i++ )
+    // Inicializa todos os literais negativos (a cor c NÃO está no slot i)
     Lits[i] = - slot_color_to_var(i, _breaker.last_guess[i]);
-  add_clause(_breaker.nslots, Lits);
+  add_clause(_breaker.nslots, Lits); // Adiciona cláusula com todos os literais negativos na fórmula geral
 
   for( i=0; i < _breaker.nslots; i++ ) {
     int color = _breaker.last_guess[i];
     int *Lits1;
-    if( feedback[i] ) {
+
+    if( feedback[i] ) { // Se a cor-slot do último chute é a cor-slot do código
       Lits1 = malloc( sizeof(int) );
       Lits1[0] = slot_color_to_var(i, color);
       add_clause( 1, Lits1 );
+      // Adiciona na fórmula um literal positivo
+      // Entra em contradição com um dos literais negativos adicionados anteriormente e 'fecha o ramo'
     }
-    else {
+    else { // Se a cor-slot do chute NÃO é a cor-slot do código
       Lits1 = malloc( sizeof(int) );
       Lits1[0] = -slot_color_to_var(i, color);
       add_clause( 1, Lits1 );
+      // Adiciona na fórmula um literal negativo
+      // Repete um dos literais negativos adicionados anteriormente e 'deixa o ramo aberto'
     }
   }
   return 0;

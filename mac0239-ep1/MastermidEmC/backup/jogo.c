@@ -25,10 +25,12 @@ int joga_Mastermind() {
   */
   for( int i=0; i <  _jogo.ntries; i++ ) {
     int* guess = codebreaker_guess();
-    printGuess( guess, _jogo.nslots );
+    //printGuess( guess, _jogo.nslots );
     int* feedback = codemaker_feedback(guess);
-    if( convert_feedback(feedback) )
+    if( convert_feedback(feedback) ){
+      printf("\nGuesses: %d\n", i+1);
       return CodeBreaker;
+    }
   }
 
   return CodeMaker;

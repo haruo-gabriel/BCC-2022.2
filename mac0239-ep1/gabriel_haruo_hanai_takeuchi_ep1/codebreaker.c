@@ -39,7 +39,7 @@ void min_one_color_per_slot() {
 }
 
 int slot_color_to_var(int slot, int color) {
-  return color*_breaker.nslots + slot + 1;
+  return color * _breaker.nslots + slot + 1;  
 }
 
 void add_clause(int nLits, int* Lits) {
@@ -49,7 +49,7 @@ void add_clause(int nLits, int* Lits) {
   _fml.clauses[ind]->nLits = nLits;
   _fml.clauses[ind]->Lits  = Lits;
   _fml.nclauses++;
-  //printf("%d: ", ind);
+  //printf("%d ", ind);
   //printClause(_fml.clauses[ind]);
 }
 
@@ -78,40 +78,55 @@ int* codebreaker_guess() {
 }
 
 int  convert_feedback(int *feedback) {
-  /*
-        This function should add clauses corresponding to the feedback obtained
-        by the last guess.
-        Returns True if won the game, False otherwise.
-  */
-
-  // Verifica se feedback == codigo
   int count = 0, i;
+
   for( i=0; i < _breaker.nslots; i++ ) 
-    if( feedback[i] ) 
+    if( feedback[i] == 1 )
       count += 1;
   if( count == _breaker.nslots )
     return 1;
-       
+
+
   // Generate extra clauses
   int *Lits = malloc( _breaker.nslots * sizeof(int) );
-  for( i=0; i < _breaker.nslots; i++ ) 
+  for (i = 0; i < _breaker.nslots; i++) 
     Lits[i] = - slot_color_to_var(i, _breaker.last_guess[i]);
   add_clause(_breaker.nslots, Lits);
 
   for( i=0; i < _breaker.nslots; i++ ) {
     int color = _breaker.last_guess[i];
-    int *Lits1;
-    if( feedback[i] ) {
-      Lits1 = malloc( sizeof(int) );
+
+    if (feedback[i] == 1) {
+      int *Lits1 = malloc(sizeof(int));
       Lits1[0] = slot_color_to_var(i, color);
-      add_clause( 1, Lits1 );
+      add_clause(1, Lits1);
     }
-    else {
-      Lits1 = malloc( sizeof(int) );
-      Lits1[0] = -slot_color_to_var(i, color);
-      add_clause( 1, Lits1 );
+
+    else if (feedback[i] == 0){
+      for (int j = 0; j < _breaker.nslots; j++){
+        int *Lits1 = malloc(sizeof(int));
+        Lits1[0] = - slot_color_to_var(j, color);
+        add_clause(1, Lits1);
+      }
+    }
+
+    else{ // if (feedback == 2)
+      int *Lits1 = malloc(sizeof(int));
+      Lits1[0] = - slot_color_to_var(i, color);
+      add_clause(1, Lits1);
+      
+      int *Lits2 = malloc((_breaker.nslots - 1) * sizeof(int));
+      int j, k;
+      for (int j = 0, k = 0; j < _breaker.nslots; j++){
+        if (j != i){
+          Lits2[k] = slot_color_to_var(j, color);
+          k += 1;
+        }
+      }
+      add_clause((_breaker.nslots) - 1, Lits2);
     }
   }
+
   return 0;
 }
 

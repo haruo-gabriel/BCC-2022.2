@@ -1,4 +1,6 @@
 #include <stdlib.h>
+#include <stdio.h>
+#include <time.h>
 
 #include "codemaker.h"
 
@@ -9,8 +11,11 @@ void  cria_CodeMaker(int nslots, int ncolors) {
   _codigo.ncolors= ncolors;
   _codigo.codigo = malloc(nslots*sizeof(int));
 
+  time_t t;
+  srand(time(&t));
+
   for(int i=0;i<nslots ;i++)
-     _codigo.codigo[i]=rand()%ncolors;
+    _codigo.codigo[i]=rand()%ncolors;
 
   printCodigo(_codigo.codigo, nslots);
   
@@ -33,7 +38,7 @@ int* codemaker_feedback( int* guess) {
   }
   //printf("Feedback: ");
   //printCodigo( feedback_answer, _codigo.nslots );
-  
+  //printf("\n");  
   return feedback_answer;
 }
 
