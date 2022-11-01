@@ -1,0 +1,97 @@
+\documentclass[11pt,reqno,a4paper]{amsart}
+
+\usepackage{setspace}
+\usepackage[portuguese]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{dsfont}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{xparse}
+
+\usepackage{fullpage}
+\usepackage{setspace}
+
+\def\Assin#1{\noindent\textit{Assinatura}\strut\\%:\\
+\framebox[\textwidth]{Gabriel Haruo Hanai Takeuchi\phantom{\vrule height#1}}}
+
+\begin{document}
+%newcommands
+\newcommand{\Span}[1]{\mathrm{Span}(#1)}
+\NewDocumentCommand{\comblin}{ O{\alpha} O{v} O{1} O{n}}{#1 _ #3  #2 _ #3 + \dots + #1 _ #4  #2 _ #4}
+
+\parindent=0pt
+
+\title{\textsl{MAT0122 Álgebra Linear I}\\\vspace{3\jot}
+  Folha de solução}
+\author[MAT0122 Folha de solução]{}
+
+\maketitle
+\thispagestyle{empty} 
+\pagestyle{plain}
+\onehalfspace
+
+\textbf{Nome: Gabriel Haruo Hanai Takeuchi}\hfill
+\textbf{Número USP: 13671636}\hspace{3cm}\null
+
+\medskip
+\Assin{1cm}
+
+\medskip \textit{Sua assinatura atesta a autenticidade e
+  originalidade de seu trabalho e que você se compromete a seguir o
+  código de ética da USP em suas atividades acadêmicas, incluindo esta
+  atividade.}
+
+\medskip
+\textbf{Exercício: E55}\hfill
+\textbf{Data: 27/10/2022}\hspace{3cm}\null
+
+\noindent\rule{\textwidth}{0.4pt}
+
+\medskip
+\noindent\textbf{SOLUÇÃO}
+
+(i) Vamos provar que existe função linear requisitada. Precisamos que:
+
+\textbullet\ Para qualquer $u \in \Span{S}$ e qualquer $\alpha \in \mathbb{F}$, $f(\alpha u) = \alpha f(u)$
+
+Suponha um vetor $u \in \Span{S}$ tal que $u = \comblin[\beta]$. Logo, é necessário que
+\begin{align*}
+    f(\alpha u) &= f(\alpha(\comblin[\beta]))\\
+    &= f(\comblin[\alpha \beta])\\
+    &= f(\alpha \beta_1 v_1) + \dots + f(\alpha \beta_n v_n) &\text{(pela linearidade de f)}\\
+    &= \alpha \beta_1 f(v_1) + \dots + \alpha \beta_n f( v_n) &\text{(pela linearidade de f)}\\
+    &= \alpha \beta_1 \varphi (v_1) + \dots + \alpha \beta_n \varphi (v_n)
+\end{align*}
+
+\medskip
+
+\textbullet\ Para quaisquer $u,v \in \Span{S}$, $f(u + v) = f(u) + f(v)$
+
+Suponha então $u,w \in \Span{S}$ tal que $u = \comblin$ e $w = \comblin[\beta]$. Logo, é necessário que
+\begin{align*}
+    f(u+v) &= f(\comblin + \comblin[\beta])\\
+    &= f((\alpha_1 + \beta_1) v_1 + \dots + (\alpha_n + \beta_n) v_n)\\
+    &= f((\alpha_1 + \beta_1) v_1) + \dots + f((\alpha_n + \beta_n) v_n) &\text{(pela linearidade de f)}\\
+    &= (\alpha_1 + \beta_1) f(v_1) + \dots + (\alpha_n + \beta_n) f(v_n) &\text{(pela linearidade de f)}\\
+    &= (\alpha_1 + \beta_1) \varphi (v_1) + \dots + (\alpha_n + \beta_n) \varphi (v_n)
+\end{align*}
+
+Como mostrado acima, $f$ existe dessa forma.
+
+\hrulefill
+
+(ii) Vamos provar que $f$ é única. Portanto, suponha $g: \Span{S} \to W$ linear.
+
+
+
+
+\endgroup
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% eval: (auto-fill-mode t)
+%%% eval: (LaTeX-math-mode t)
+%%% eval: (flyspell-mode t)
+%%% TeX-master: t
+%%% End:
