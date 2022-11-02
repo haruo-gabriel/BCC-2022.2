@@ -80,8 +80,41 @@ Como mostrado acima, $f$ existe dessa forma.
 
 \hrulefill
 
-(ii) Vamos provar que $f$ é única. Portanto, suponha $g: \Span{S} \to W$ linear.
+(ii) Vamos provar que $f$ é única. Portanto, suponha $g: \Span{S} \to W$ linear tal que $g(v_i) = \varPhi (v_i)$ para todo $1 \leq i \leq n$.
 
+Observe que $g$ segue a mesma construção de linearidade que $f$ em (i).
+
+\pagebreak
+
+\textbullet\ Para qualquer $u \in \Span{S}$ e qualquer $\alpha \in \mathbb{F}$, $g(\alpha u) = \alpha g(u)$
+
+Suponha um vetor $u \in \Span{S}$ tal que $u = \comblin[\beta]$. Logo, é necessário que
+\begin{align*}
+    g(\alpha u) &= g(\alpha(\comblin[\beta]))\\
+    &= g(\comblin[\alpha \beta])\\
+    &= g(\alpha \beta_1 v_1) + \dots + g(\alpha \beta_n v_n) &\text{(pela linearidade de g)}\\
+    &= \alpha \beta_1 g(v_1) + \dots + \alpha \beta_n g( v_n) &\text{(pela linearidade de g)}\\
+    &= \alpha \beta_1 \varphi (v_1) + \dots + \alpha \beta_n \varphi (v_n)\\
+    &= \alpha \beta_1 f(v_1) + \dots + \alpha \beta_n f( v_n)\\
+    &= f(\alpha u)
+\end{align*}
+
+\medskip
+
+\textbullet\ Para quaisquer $u,v \in \Span{S}$, $g(u + v) = g(u) + g(v)$
+
+Suponha então $u,w \in \Span{S}$ tal que $u = \comblin$ e $w = \comblin[\beta]$. Logo, é necessário que
+\begin{align*}
+    g(u+v) &= g(\comblin + \comblin[\beta])\\
+    &= g((\alpha_1 + \beta_1) v_1 + \dots + (\alpha_n + \beta_n) v_n)\\
+    &= g((\alpha_1 + \beta_1) v_1) + \dots + g((\alpha_n + \beta_n) v_n) &\text{(pela linearidade de g)}\\
+    &= (\alpha_1 + \beta_1) g(v_1) + \dots + (\alpha_n + \beta_n) g(v_n) &\text{(pela linearidade de g)}\\
+    &= (\alpha_1 + \beta_1) \varphi (v_1) + \dots + (\alpha_n + \beta_n) \varphi (v_n)\\
+    &= (\alpha_1 + \beta_1) f(v_1) + \dots + (\alpha_n + \beta_n) f(v_n)\\
+    &= f(u + v)
+\end{align*}
+
+Logo, $f = g$. Então, $f$ é uma função linear única.
 
 
 
