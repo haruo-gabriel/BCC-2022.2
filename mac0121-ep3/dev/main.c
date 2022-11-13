@@ -1,20 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "sorting.h"
 
 /* compiling
 gcc -Wall -ansi -pedantic -O0 -g main.c -o a
 */
 
+#define MAXWORD 12
 
-void printWords(char **words, int nwords);
-void insertionSort (char **A, int n);
 
 int main(){
     /* Inicialização das palavras */
     char **words;
     int nwords=0, i=0;   
-    char buffer[12];
+    /*char buffer[MAXWORD];*/
+
+    char **words_insertion;
+    char **words_merge;
+    char **words_quick;
+    char **words_heap;
 
     printf("How many words? ");
     scanf("%d", &nwords);
@@ -22,7 +27,7 @@ int main(){
     words = malloc(nwords * sizeof(char *));
 
     for(i = 0; i < nwords; i++){
-        words[i] = malloc(12 * sizeof(char));
+        words[i] = malloc(MAXWORD * sizeof(char));
         /*scanf("%s", buffer);
         strcpy(words[i], buffer);*/
         scanf("%s", words[i]);
@@ -30,62 +35,42 @@ int main(){
 
     printWords(words, nwords);
 
+
     /* Ordenação */
-    insertionSort(words, nwords);
+
     printf("After insertion sort\n");
-    printWords(words, nwords);
-
-	mergeSort(words, nwords);
+    words_insertion = copyWords(words, nwords);
+    insertionSort(words_insertion, nwords);
+    printWords(words_insertion, nwords);
+    freeWords(words_insertion, nwords);
+    
     printf("After merge sort\n");
-    printWords(words, nwords);
-
-
-	quickSort(words, nwords);
+    words_merge = copyWords(words, nwords);
+	mergeSort(0, nwords-1, words_merge);
+	printf("comparações: %d\n", comparacoes_merge);
+	printf("trocas: %d\n", trocas_merge);
+    printWords(words_merge, nwords);
+    freeWords(words_merge, nwords);
+    /*
     printf("After quick sort\n");
-    printWords(words, nwords);
-	
-	heapSort(words, nwords);
+    words_quick = copyWords(words, nwords);
+	quickSort(words_quick, 0, nwords-1);
+    printWords(words_quick, nwords);
+    freeWords(words_quick, nwords);
+	*/
+    /*
     printf("After heap sort\n");
-    printWords(words, nwords);
+    words_heap = copyWords(words, nwords);
+	heapSort(words_heap, nwords);
+    printWords(words_heap, nwords);
+    freeWords(words_heap, nwords);
+    */
 
 
-
-    /* free */
-    for (i = 0; i < nwords; i++){
-        free(words[i]);
-    }
-    free(words);
+    freeWords(words, nwords);
 
     return 0;
 }
 
-void printWords(char **words, int nwords){
-    int i;
-    for (i = 0; i < nwords; i++){
-        printf("Word[%d] = %s\n", i+1, words[i]);
-        printf("\n");
-    }
-    printf("\n");
-}
 
-void insertionSort (char **A, int n) {
-  int i, j, comparacoes=0;
-  char *chave;
-  chave = malloc(12 * sizeof(char));
-  /* a cada iteração, teremos o vetor A[1..i] ordenado */
-  /* começamos de A[i], porque obviamente o vetor em A[0..0] está 
-     trivialmente ordenado */
-     
-  for (i = 1; i < n; i++) {
-    strcpy(chave, A[i]);
-    j = i - 1;
 
-    /* encontra a posicao correta de chave (A[i]) no vetor A[0..i-1] */
-    while (j >= 0 && strcmp(A[j], chave) > 0 /*A[j] > chave*/) {
-      strcpy(A[j+1], A[j]); /*A[j + 1] = A[j];*/
-      comparacoes++;
-      j = j - 1;
-    }
-	strcpy(A[j+1], chave);
-  }
-}

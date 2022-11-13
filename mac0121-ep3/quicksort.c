@@ -12,18 +12,16 @@ void troca (int v[], int i, int j){
 
 int particiona (int v[], int ini, int fim) {
 	int i, j, x;
-
 	i = ini;
 	j = fim+1;
 	x = v[ini];
 	while (1){
 		while (v[++i] < x)
 			if (i == fim)
-	break;
-
+				break;
 		while (v[--j] > x)
 			if (j == ini)
-	break;
+				break;
 
 		if (i >= j)
 			break;

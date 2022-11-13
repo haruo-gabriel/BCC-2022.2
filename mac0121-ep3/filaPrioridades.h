@@ -1,5 +1,5 @@
 typedef struct cel {
-  char chave[10];
+  char *chave;
   struct cel * esq;
   struct cel * dir; 
 } no;
