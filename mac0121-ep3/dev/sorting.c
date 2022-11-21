@@ -22,7 +22,7 @@ int trocas_heap = 0;
 void printWords(char **words, int nwords){
     int i;
     for (i = 0; i < nwords; i++){
-        printf("Word[%d] = %s\n", i, words[i]);
+        printf("word[%d] = %s\n", i, words[i]);
     }
     printf("\n");
 }
@@ -50,7 +50,11 @@ void freeWords (char **words, int nwords){
 	free(words);
 }
 
-/*insertion sort*/
+
+
+
+
+/*INSERTION SORT*/
 void insertionSort (char **A, int n) {
     int i, j;
     char *chave = malloc(12 * sizeof(char));
@@ -72,16 +76,13 @@ void insertionSort (char **A, int n) {
     }
 
 	free(chave);
-
-    printf("comparações: %d\n", comparacoes_insertion);
-    printf("trocas: %d\n", trocas_insertion);
 }
 
 
 
 
 
-/* merge sort */
+/*MERGE SORT*/
 /* A função recebe vetores crescentes v[p, ... ,q]  e v[q+1, ... ,r] e rearranja v[p, ... ,r] em ordem crescente */
 void merge (int p, int q, int r, char **v){
 	char **A, **B;                     
@@ -97,7 +98,7 @@ void merge (int p, int q, int r, char **v){
     }
 
 	B = malloc (n2 * sizeof(char *));    
-    for(i = 0; i < n1; i++){
+    for(i = 0; i < n2; i++){
         B[i] = malloc(MAXWORD * sizeof(char));
 	}
 	for (i = 0; i < n2; i++){
@@ -136,66 +137,96 @@ void merge (int p, int q, int r, char **v){
 	free(B);
 }
 
-
-/* A função mergesort rearranja o vetor v[p..r] em ordem crescente. */
-void mergeSort (int p, int r, char **v) {
-	int q;
+void mergeSort (int ini, int fim, char **v) {
+	int meio;
   
-	if (p < r) {                 
-    	q = (p + r)/2;         
-    	mergeSort(p, q, v);       
-   		mergeSort(q+1, r, v);       
-    	merge(p, q, r, v);    
+	if (ini < fim) {                 
+    	meio = (ini + fim)/2;         
+    	mergeSort(ini, meio, v); 
+   		mergeSort(meio+1, fim, v);
+    	merge(ini, meio, fim, v);
   	}
-
 }
 
 
 
 
-/* quick sort*/
-void troca (char **v, int i, int j){
-	char *aux = malloc(MAXWORD * sizeof(char));
-	strcpy(aux, v[j]);
-	strcpy(v[j], v[i]);
-	strcpy(v[i], aux);
-    free(aux);
+
+/*QUICK SORT com ordenação indireta*/
+void troca (int *indexes, int i, int j){
+    int aux;
+    aux = indexes[i];
+    indexes[i] = indexes[j];
+    indexes[j] = aux;
+	trocas_quick++;
 }
 
-
-int particiona (char **v, int ini, int fim) {
+int particiona (char **v, int *indexes, int ini, int fim) {
 	int i, j;
     char *x;
 
 	i = ini;
 	j = fim+1;
-    x = v[ini];
+    x = v[indexes[ini]];
 
     /* separa os elementos maiores e menores que o pivo */
 	while(1){
-		while(strcmp(v[++i], x) < 0)
+		while(strcmp(v[indexes[++i]], x) < 0){
+			comparacoes_quick++;
 			if (i == fim)
 	            break;
-		while(strcmp(v[--j], x) > 0)
+        }
+		comparacoes_quick++;
+
+		while(strcmp(v[indexes[--j]], x) > 0){
+			comparacoes_quick++;
 			if (j == ini)
             	break;
+		}
+		comparacoes_quick++;
+
 		if (i >= j)
 			break;
-		troca(v, i, j);
+
+		troca(indexes, i, j);
 	}
 
     /* coloca o pivo no lugar certo */
-	troca(v, ini, j);
+	troca(indexes, ini, j);
     
 	return j;
 }
 
-void quickSort (char **v, int ini, int fim) {
-	int x;
+void quickSort (char **v, int *indexes, int ini, int fim) {
+	int meio;
 
 	if (ini < fim){
-		x = particiona(v, ini, fim);
-		quickSort(v, ini, x - 1);
-		quickSort(v, x + 1, fim);
+		meio = particiona(v, indexes, ini, fim);
+		quickSort(v, indexes, ini, meio - 1);
+		quickSort(v, indexes, meio + 1, fim);
 	}
 }
+
+char **remontaWords (char **original, int *indexes, int nwords){
+    int i;
+    char **ordenado;
+
+    ordenado = malloc(nwords * sizeof(char *));
+    for (i = 0; i < nwords; i++)
+        ordenado[i] = malloc(MAXWORD * sizeof(char));
+
+    for (i = 0; i < nwords; i++)
+        strcpy(ordenado[i], original[indexes[i]]);
+
+    for (i = 0; i < nwords; i++)
+		free(original[i]);
+	free(original);
+
+    return ordenado;
+}
+
+
+
+
+
+/*HEAP SORT*/

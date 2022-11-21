@@ -17,9 +17,10 @@ void freeWords (char **words, int nwords);
 
 void insertionSort (char **A, int n);
 
-void merge (int p, int q, int r, char **v);
-void mergeSort (int p, int r, char **v);
+void merge (int ini, int meio, int fim, char **v);
+void mergeSort (int meio, int fim, char **v);
 
-void troca (char **v, int i, int j);
-int particiona (char **v, int ini, int fim);
-void quickSort (char **v, int ini, int fim);
+void troca (int *indexes, int i, int j);
+int particiona (char **v, int *indexes, int ini, int fim);
+void quickSort (char **v, int *indexes, int ini, int fim);
+char **remontaWords (char **original, int *indexes, int nwords);
