@@ -4,7 +4,7 @@ all files from the second semester of 2022.
 it includes source codes from:
 
 ### MAT0122 - Álgebra Linear
-* [EXs: exercises from the book "Coding The Matrix"](/mat0122)
+* [EXs: exercises from Yoshiharu's "Exercicios.pdf"](/mat0122)
 ### MAC0121 - Algoritmos e Estruturas de Dados I
 * [EP1: Collatz conjecture observations](/mac0121-ep1)
 * [EP2: crossword puzzle solver](/mac0121-ep2)
