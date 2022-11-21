@@ -11,5 +11,6 @@ it includes source codes from:
 * [EP3: sorting algorithms statistics](mac0121-ep3)
 ### MAC0239 - Lógica e Verificação de Programas
 * [EP1: Mastermind](/mac0239-ep1)
+* [EP2: a proof in first order logic](/mac0239-ep2)
 ### MAC0216 - Técnicas de Programação I (deprecated)
 * [EP1: assembly x86_64](/mac0216-ep1)
