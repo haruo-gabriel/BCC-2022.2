@@ -50,6 +50,16 @@ void freeWords (char **words, int nwords){
 	free(words);
 }
 
+void escreveWords (char **words ,int nwords, FILE *filep){
+	int i;
+	fprintf(filep, "%d\n", nwords);
+	for (i = 0; i < nwords; i++){
+		if (i == nwords - 1)
+			fprintf(filep, "%s", words[i]);
+		else
+			fprintf(filep, "%s\n", words[i]);
+	}
+}
 
 
 
@@ -153,7 +163,7 @@ void mergeSort (int ini, int fim, char **v) {
 
 
 /*QUICK SORT com ordenação indireta*/
-void troca (int *indexes, int i, int j){
+void trocaQuick (int *indexes, int i, int j){
     int aux;
     aux = indexes[i];
     indexes[i] = indexes[j];
@@ -188,11 +198,11 @@ int particiona (char **v, int *indexes, int ini, int fim) {
 		if (i >= j)
 			break;
 
-		troca(indexes, i, j);
+		trocaQuick(indexes, i, j);
 	}
 
     /* coloca o pivo no lugar certo */
-	troca(indexes, ini, j);
+	trocaQuick(indexes, ini, j);
     
 	return j;
 }
@@ -229,4 +239,46 @@ char **remontaWords (char **original, int *indexes, int nwords){
 
 
 
-/*HEAP SORT*/
+/*HEAP SORT com ordenação indireta*/
+void heapSort (char **v, int *indexes, int n){
+    int i;
+
+    /*transforma vetor em max heap*/
+    for (i = n/2 - 1; i >= 0; i--)
+        heapfica (v, indexes, n, i);
+
+    /*ordena*/
+    for (i = n - 1; i >= 0; i--){
+        trocaHeap(indexes, 0, i);
+        heapfica(v, indexes, i, 0);
+    }
+}
+
+void heapfica (char **v, int *indexes, int n, int i){
+    int maior = i;
+    int esq = 2*i + 1;
+    int dir = 2*i + 2;
+    
+	comparacoes_heap++;
+    if (esq < n && strcmp(v[indexes[esq]], v[indexes[maior]]) > 0){
+        maior = esq;
+	}
+    
+	comparacoes_heap++;
+    if (dir < n && strcmp(v[indexes[dir]], v[indexes[maior]]) > 0){
+        maior = dir;
+	}
+
+	comparacoes_heap++;
+    if (maior != i){
+        trocaHeap(indexes, i, maior);
+        heapfica(v, indexes, n, maior);
+    }
+}
+
+void trocaHeap (int *indexes, int i, int j){
+    int temp = indexes[i];
+    indexes[i] = indexes[j];
+    indexes[j] = temp;
+	trocas_heap++; 
+}

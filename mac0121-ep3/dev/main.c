@@ -4,7 +4,7 @@
 #include "sorting.h"
 
 /* compiling
-gcc -Wall -ansi -pedantic -O0 -g *.c -o a
+gcc -Wall -ansi -pedantic -O2 *.c -o a
 */
 
 #define MAXWORD 12
