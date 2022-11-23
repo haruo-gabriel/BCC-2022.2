@@ -1,56 +1,42 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
 #include "sorting.h"
 
 /* compiling
 gcc -Wall -ansi -pedantic -O2 heapsort.c sorting.c -o a
+./a [number of words to read]
 */
 
-
-int main(){
+int main(int argc, char *argv[]){
     /*Inicialização*/
     char **words;
-    int i, j;
+    int i;
     int *indexes;
+    FILE *randomwords = fopen(FILENAME, "r");
+    int nwords = atoi(argv[1]);
 
-    /*Leitura das palavras aleatórias e alocação*/
-    FILE *randomwords = fopen("../worddata/randomwords.txt", "r");
-    if (randomwords == NULL){
-        printf("failed to open file. aborting now.\n");
+    words = malloc(nwords * sizeof(char *));
+
+    if (!readWords(randomwords, words, nwords))
         return 1;
-    }
-    words = malloc(NWORDS * sizeof(char *));
-    for(i = 0; i < NWORDS; i++){
-        words[i] = malloc(MAXWORD * sizeof(char));
-        j = fscanf(randomwords, "%s", words[i]);
-        if (j != 1){
-            printf("error reading word. aborting now.\n");
-            return 1;
-        }
-    }
-    fclose(randomwords);
 
-    printWords(words, NWORDS);
+    printWords(words, nwords);
 
     /*Alocação do vetor auxiliar de índices*/
-    indexes = malloc(NWORDS * sizeof(int));
-    for (i = 0; i < NWORDS; i++){
+    indexes = malloc(nwords * sizeof(int));
+    for (i = 0; i < nwords; i++){
         indexes[i] = i;
     }
 
     /*Ordenação*/
     printf("After heap sort\n");
-	heapSort(words, indexes, NWORDS);
-    words = remontaWords(words, indexes, NWORDS);
-	printf("comparações: %d\n", comparacoes);
-	printf("trocas: %d\n", trocas);
-    printWords(words, NWORDS);
+	heapSort(words, indexes, nwords);
+    words = remontaWords(words, indexes, nwords);
+    printWords(words, nwords);
 
-    writeWords(words, nwords);
-    
+    if (imprimeDados("heap", nwords))
+        printf("wrote data succesfully.\n");
+
     /*FREE*/
-    freeWords(words, NWORDS);
+    freeWords(words, nwords);
     free(indexes);
 
     return 0;

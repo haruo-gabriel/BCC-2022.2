@@ -1,13 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "sorting.h"
 
-#define MAXWORD 11
-#define NWORDS 250
-
-int comparacoes = 0;
-int trocas = 0;
+unsigned long int comparacoes = 0;
+unsigned long int trocas = 0;
 
 /*Imprime todas as strings em um array de strings*/
 void printWords(char **words, int nwords){
@@ -43,16 +37,17 @@ void freeWords (char **words, int nwords){
 
 void writeWords (char **words ,int nwords){
 	int i;
-    char buf[0x100];
+    /*char buf[0x100];*/
 	FILE *sortedwords;
 
-    sortedwords = fopen(buf, "w");
+    sortedwords = fopen("../worddata/sortedwords.txt", "w");
     if (sortedwords == NULL){
         printf("error while opening write file. aborting now.\n");
     }
-
-    snprintf(buf, sizeof(buf), "../worddata/sortedwords%d.txt", NWORDS);
+/*
+    snprintf(buf, sizeof(buf), "../worddata/sortedwords%d.txt", nwords);
 	fprintf(sortedwords, "%d\n", nwords);
+*/
 
 	for (i = 0; i < nwords; i++){
 		if (i == nwords - 1)
@@ -62,6 +57,62 @@ void writeWords (char **words ,int nwords){
 	}
 
 	fclose(sortedwords);
+}
+
+int imprimeDados(char sortalgo[], int nwords){
+	FILE *data = fopen("../worddata/data.csv", "a");
+    char buf[0x100];
+
+    if (data == NULL){
+        printf("error while opening data file. aborting now.\n");
+		return 0;
+    }
+
+    snprintf(buf, sizeof(buf), "%s,%s,%d,%d,%d\n", sortalgo, WORDSORT, nwords, comparacoes, trocas);
+	fputs(buf, data);
+
+	data = freopen("../data/data.csv", "r", data);	
+
+	fclose(data);
+
+	return 1;
+}
+int readWords (FILE *randomwords, char **words, int nwords){
+	int i, j;
+
+    if (randomwords == NULL){
+        printf("failed to open file. aborting now.\n");
+        return 0;
+    }
+    for(i = 0; i < nwords; i++){
+        words[i] = malloc(MAXWORD * sizeof(char));
+        j = fscanf(randomwords, "%s", words[i]);
+        if (j != 1){
+            printf("error reading word. aborting now.\n");
+            return 0;
+        }
+    }
+    fclose(randomwords);
+
+	return 1;
+}
+
+char **remontaWords (char **original, int *indexes, int nwords){
+    int i;
+    char **ordenado;
+
+    ordenado = malloc(nwords * sizeof(char *));
+    for (i = 0; i < nwords; i++)
+        ordenado[i] = malloc(MAXWORD * sizeof(char));
+
+    for (i = 0; i < nwords; i++)
+        strcpy(ordenado[i], original[indexes[i]]);
+
+    for (i = 0; i < nwords; i++)
+		free(original[i]);
+	free(original);
+
+    return ordenado;
 }
 
 void trocaIndices (int *indexes, int i, int j){
@@ -100,7 +151,6 @@ void insertionSort (char **words, int nwords) {
 
 
 /*MERGE SORT*/
-/* A função recebe vetores crescentes v[p, ... ,q]  e v[q+1, ... ,r] e rearranja v[p, ... ,r] em ordem crescente */
 void merge (int p, int q, int r, char **v){
 	char **A, **B;                     
 	int i, j, k, n1 = q - p + 1, n2 = r - q;
@@ -109,17 +159,13 @@ void merge (int p, int q, int r, char **v){
 	A = malloc (n1 * sizeof(char *));
     for(i = 0; i < n1; i++){
         A[i] = malloc(MAXWORD * sizeof(char));
-	}
-	for (i = 0; i < n1; i++){
-		strcpy(A[i], v[p+i]);
+		A[i] = v[p+i];
     }
 
 	B = malloc (n2 * sizeof(char *));    
     for(i = 0; i < n2; i++){
         B[i] = malloc(MAXWORD * sizeof(char));
-	}
-	for (i = 0; i < n2; i++){
-		strcpy(B[i], v[q+1+i]);
+		B[i] = v[q+1+i];
 	}
 
 	/* mesclando os vetores auxiliares */
@@ -127,10 +173,10 @@ void merge (int p, int q, int r, char **v){
 	while (i < n1 && j < n2) {
 		comparacoes++;       
 		if (strcmp(A[i], B[j]) <= 0){
-			strcpy(v[k], A[i++]);
+			v[k] = A[i++];
 		}
 		else{
-			strcpy(v[k], B[j++]);
+			v[k] = B[j++];
 			trocas++;
 		}
 		k++;
@@ -138,19 +184,11 @@ void merge (int p, int q, int r, char **v){
 
 	/* adição final dos elementos que sobraram nos vetores auxiliares */
 	while (i < n1)
-		strcpy(v[k++], A[i++]);
+		v[k++] = A[i++];
       
 	while (j < n2)
-		strcpy(v[k++], B[j++]);
+		v[k++] = B[j++];
 
-	/* free */
-	for (i = 0; i < n1; i++)
-		free(A[i]);
-	free(A);
-
-	for (i = 0; i < n2; i++)
-		free(B[i]);
-	free(B);
 }
 
 void mergeSort (int ini, int fim, char **v) {
@@ -210,28 +248,11 @@ void quickSort (char **v, int *indexes, int ini, int fim) {
 
 	if (ini < fim){
 		meio = particiona(v, indexes, ini, fim);
-		quickSort(v, indexes, ini, meio - 1);
-		quickSort(v, indexes, meio + 1, fim);
+		quickSort(v, indexes, ini, meio-1);
+		quickSort(v, indexes, meio+1, fim);
 	}
 }
 
-char **remontaWords (char **original, int *indexes, int nwords){
-    int i;
-    char **ordenado;
-
-    ordenado = malloc(nwords * sizeof(char *));
-    for (i = 0; i < nwords; i++)
-        ordenado[i] = malloc(MAXWORD * sizeof(char));
-
-    for (i = 0; i < nwords; i++)
-        strcpy(ordenado[i], original[indexes[i]]);
-
-    for (i = 0; i < nwords; i++)
-		free(original[i]);
-	free(original);
-
-    return ordenado;
-}
 
 
 

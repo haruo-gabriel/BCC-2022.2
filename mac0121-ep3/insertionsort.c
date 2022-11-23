@@ -2,44 +2,33 @@
 
 /* compiling
 gcc -Wall -ansi -pedantic -O2 insertionsort.c sorting.c -o a
+./a [number of words to read]
 */
 
-int main(){
+int main(int argc, char *argv[]){
     /*Inicialização*/
     char **words;
-    int i, j;
+    FILE *randomwords = fopen(FILENAME, "r");
+    int nwords = atoi(argv[1]);
 
-    /*Leitura das palavras aleatórias e alocação*/
-    FILE *randomwords = fopen("../worddata/randomwords.txt", "r");
-    if (randomwords == NULL){
-        printf("failed to open file. aborting now.\n");
+    words = malloc(nwords* sizeof(char *));
+
+    if (!readWords(randomwords, words, nwords))
         return 1;
-    }
-    words = malloc(NWORDS * sizeof(char *));
-    for(i = 0; i < NWORDS; i++){
-        words[i] = malloc(MAXWORD * sizeof(char));
-        j = fscanf(randomwords, "%s", words[i]);
-        if (j != 1){
-            printf("error reading word. aborting now.\n");
-            return 1;
-        }
-    }
-    fclose(randomwords);
 
-    printWords(words, NWORDS);
+    printWords(words, nwords);
 
     /*Ordenação*/
     printf("After insertion sort\n");
-    insertionSort(words, NWORDS);
-    printf("comparações: %d\n", comparacoes);
-    printf("trocas: %d\n", trocas);
-    printWords(words, NWORDS);
+    insertionSort(words, nwords);
+    printWords(words, nwords);
+
+    /*
+    if (imprimeDados("insertion", nwords))
+        printf("wrote data succesfully.\n");
+    */
     
-    /*FREE*/
-    freeWords(words, NWORDS);    
+    freeWords(words, nwords);
 
     return 0;
 }
-
-
-
