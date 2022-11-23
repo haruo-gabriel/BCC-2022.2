@@ -3,20 +3,11 @@
 #include <string.h>
 #include "sorting.h"
 
-#define MAXWORD 12
+#define MAXWORD 11
+#define NWORDS 250
 
-
-int comparacoes_insertion = 0;
-int trocas_insertion = 0;
-
-int comparacoes_merge = 0;
-int trocas_merge = 0;
-
-int comparacoes_quick = 0;
-int trocas_quick = 0;
-
-int comparacoes_heap = 0;
-int trocas_heap = 0;
+int comparacoes = 0;
+int trocas = 0;
 
 /*Imprime todas as strings em um array de strings*/
 void printWords(char **words, int nwords){
@@ -50,42 +41,58 @@ void freeWords (char **words, int nwords){
 	free(words);
 }
 
-void escreveWords (char **words ,int nwords, FILE *filep){
+void writeWords (char **words ,int nwords){
 	int i;
-	fprintf(filep, "%d\n", nwords);
+    char buf[0x100];
+	FILE *sortedwords;
+
+    sortedwords = fopen(buf, "w");
+    if (sortedwords == NULL){
+        printf("error while opening write file. aborting now.\n");
+    }
+
+    snprintf(buf, sizeof(buf), "../worddata/sortedwords%d.txt", NWORDS);
+	fprintf(sortedwords, "%d\n", nwords);
+
 	for (i = 0; i < nwords; i++){
 		if (i == nwords - 1)
-			fprintf(filep, "%s", words[i]);
+			fprintf(sortedwords, "%s", words[i]);
 		else
-			fprintf(filep, "%s\n", words[i]);
+			fprintf(sortedwords, "%s\n", words[i]);
 	}
+
+	fclose(sortedwords);
+}
+
+void trocaIndices (int *indexes, int i, int j){
+    int aux;
+    aux = indexes[i];
+    indexes[i] = indexes[j];
+    indexes[j] = aux;
+	trocas++;
 }
 
 
 
-
 /*INSERTION SORT*/
-void insertionSort (char **A, int n) {
+void insertionSort (char **words, int nwords) {
     int i, j;
-    char *chave = malloc(12 * sizeof(char));
+    char *chave = malloc(MAXWORD * sizeof(char));
 
-    for(i = 1; i < n; i++){
-    	strcpy(chave, A[i]);
+    for(i = 1; i < nwords; i++){
+    	chave = words[i];
 		j = i - 1;
 
-		while (j >= 0 && strcmp(A[j], chave) > 0) {
-			comparacoes_insertion++;
-			strcpy(A[j+1], A[j]);
-			trocas_insertion++;
+		while (j >= 0 && strcmp(words[j], chave) > 0) {
+			comparacoes++;
+			words[j+1] = words[j];
+			trocas++;
 			j = j - 1;
      	}
-		comparacoes_insertion++;
+		comparacoes++;
     	
-		strcpy(A[j+1], chave);
-		trocas_insertion++;
+		words[j+1] = chave;
     }
-
-	free(chave);
 }
 
 
@@ -118,14 +125,13 @@ void merge (int p, int q, int r, char **v){
 	/* mesclando os vetores auxiliares */
 	i = 0, j = 0; k = p;
 	while (i < n1 && j < n2) {
-		comparacoes_merge++;       
+		comparacoes++;       
 		if (strcmp(A[i], B[j]) <= 0){
 			strcpy(v[k], A[i++]);
-			trocas_merge++;
 		}
 		else{
 			strcpy(v[k], B[j++]);
-			trocas_merge++;
+			trocas++;
 		}
 		k++;
 	}
@@ -163,14 +169,6 @@ void mergeSort (int ini, int fim, char **v) {
 
 
 /*QUICK SORT com ordenação indireta*/
-void trocaQuick (int *indexes, int i, int j){
-    int aux;
-    aux = indexes[i];
-    indexes[i] = indexes[j];
-    indexes[j] = aux;
-	trocas_quick++;
-}
-
 int particiona (char **v, int *indexes, int ini, int fim) {
 	int i, j;
     char *x;
@@ -182,27 +180,27 @@ int particiona (char **v, int *indexes, int ini, int fim) {
     /* separa os elementos maiores e menores que o pivo */
 	while(1){
 		while(strcmp(v[indexes[++i]], x) < 0){
-			comparacoes_quick++;
+			comparacoes++;
 			if (i == fim)
 	            break;
         }
-		comparacoes_quick++;
+		comparacoes++;
 
 		while(strcmp(v[indexes[--j]], x) > 0){
-			comparacoes_quick++;
+			comparacoes++;
 			if (j == ini)
             	break;
 		}
-		comparacoes_quick++;
+		comparacoes++;
 
 		if (i >= j)
 			break;
 
-		trocaQuick(indexes, i, j);
+		trocaIndices(indexes, i, j);
 	}
 
     /* coloca o pivo no lugar certo */
-	trocaQuick(indexes, ini, j);
+	trocaIndices(indexes, ini, j);
     
 	return j;
 }
@@ -249,7 +247,7 @@ void heapSort (char **v, int *indexes, int n){
 
     /*ordena*/
     for (i = n - 1; i >= 0; i--){
-        trocaHeap(indexes, 0, i);
+        trocaIndices(indexes, 0, i);
         heapfica(v, indexes, i, 0);
     }
 }
@@ -259,26 +257,19 @@ void heapfica (char **v, int *indexes, int n, int i){
     int esq = 2*i + 1;
     int dir = 2*i + 2;
     
-	comparacoes_heap++;
+	comparacoes++;
     if (esq < n && strcmp(v[indexes[esq]], v[indexes[maior]]) > 0){
         maior = esq;
 	}
     
-	comparacoes_heap++;
+	comparacoes++;
     if (dir < n && strcmp(v[indexes[dir]], v[indexes[maior]]) > 0){
         maior = dir;
 	}
 
-	comparacoes_heap++;
+	comparacoes++;
     if (maior != i){
-        trocaHeap(indexes, i, maior);
+        trocaIndices(indexes, i, maior);
         heapfica(v, indexes, n, maior);
     }
-}
-
-void trocaHeap (int *indexes, int i, int j){
-    int temp = indexes[i];
-    indexes[i] = indexes[j];
-    indexes[j] = temp;
-	trocas_heap++; 
 }

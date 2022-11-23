@@ -1,52 +1,42 @@
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "sorting.h"
-#define MAXWORD 12
 
 /* compiling
-gcc -Wall -ansi -pedantic -O2 insertionSort.c sorting.c -o a
+gcc -Wall -ansi -pedantic -O2 insertionsort.c sorting.c -o a
 */
 
 int main(){
     /*Inicialização*/
     char **words;
-    int nwords=0, i=0;   
+    int i, j;
 
-    char **words_insertion;
-
-    FILE *randomwords;
-    randomwords = fopen("../randomwords.txt", "r");
+    /*Leitura das palavras aleatórias e alocação*/
+    FILE *randomwords = fopen("../worddata/randomwords.txt", "r");
     if (randomwords == NULL){
-        printf("failed to open file. exiting now.\n");
+        printf("failed to open file. aborting now.\n");
         return 1;
     }
-
-    fscanf(randomwords, "%d", &nwords);
-    printf("%d words\n", nwords);
-
-    words = malloc(nwords * sizeof(char *));
-    
-    for(i = 0; i < nwords; i++){
+    words = malloc(NWORDS * sizeof(char *));
+    for(i = 0; i < NWORDS; i++){
         words[i] = malloc(MAXWORD * sizeof(char));
-        fscanf(randomwords, "%s", words[i]);
+        j = fscanf(randomwords, "%s", words[i]);
+        if (j != 1){
+            printf("error reading word. aborting now.\n");
+            return 1;
+        }
     }
-
-    printWords(words, nwords);
-
     fclose(randomwords);
+
+    printWords(words, NWORDS);
 
     /*Ordenação*/
     printf("After insertion sort\n");
-    words_insertion = copyWords(words, nwords);
-    insertionSort(words_insertion, nwords);
-    printf("comparações: %d\n", comparacoes_insertion);
-    printf("trocas: %d\n", trocas_insertion);
-    printWords(words_insertion, nwords);
-    freeWords(words_insertion, nwords);
+    insertionSort(words, NWORDS);
+    printf("comparações: %d\n", comparacoes);
+    printf("trocas: %d\n", trocas);
+    printWords(words, NWORDS);
     
-    freeWords(words, nwords);
+    /*FREE*/
+    freeWords(words, NWORDS);    
 
     return 0;
 }
