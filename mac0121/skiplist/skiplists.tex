@@ -1,0 +1,66 @@
+#packages
+\usepackage{amsmath}
+
+
+\title{Skip Lists}
+
+\begin{document}
+    
+\title 
+
+\section*{Definitions}
+
+\begin{itemize}
+    \item Estrutura de dados ordenada e probabilística
+    \item Generalização das listas ligadas
+\end{itemize}    
+
+\section*{Estrutura geral}
+
+Lista ligada convencional (cada célula tem um ponteiro para o próximo elemento).
+
+A diferença é que há células que possuem mais de um ponteiro, com o objetivo de "pular" elementos da lista e fazer uma busca mais rápida.
+
+A quantidade máxima de ponteiros que uma célula tem é pré-definida. Esse número é o número de \textbf{níveis} da lista.
+
+O "nó cabeça" é uma célula que possui $n_{níveis}$ ponteiros para as primeiras células que possuem um ponteiro para cada nível.
+
+Exemplo:
+\begin{bmatrix}
+    
+\end{bmatrix}
+
+
+\section*{Probabilidades}
+
+Qual a lógica para decidir quais células tem mais ponteiros?
+
+\begin{itemize}
+    \item $n$ nós tem pelo menos 1 ponteiro
+    \item $n/t$ nós tem pelo menos 2 ponteiros
+    \item $n/t^2$ nós tem pelo menos 3 ponteiros
+\end{itemize}
+
+\vdots
+
+Generalização: a probabilidade de um nó ter $j+1$ ponteiros é $\frac{1}{j+1}$
+
+Buscas e inserções fazem, em média, $\frac{t \log_t n}{2} = \frac{t}{\log_2 t} \log_2 n$ comparações.
+
+Skip lists têm, em média, $\frac{t}{t-1} n$ ponteiros.
+
+\section*{Busca}
+
+\subsection*{Inserção}
+Quais os problemas da inserção?
+\begin{itemize}
+    \item Como reorganizar os ponteiros?
+    \item 
+\end{itemize}
+\end{abstract}
+
+\subsection*{Remoção}
+
+\section*{Implementação}
+
+\end{document}

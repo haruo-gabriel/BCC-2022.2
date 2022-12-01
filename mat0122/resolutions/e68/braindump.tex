@@ -1,0 +1,60 @@
+\usepackage{amsmath}
+\usepackage{amssymb}
+\newcommand{\Null}[1]{\mathrm{Null }{#1}}
+\newcommand{\Row}[1]{\mathrm{Row }{#1}}
+\newcommand{\Col}[1]{\mathrm{Col }{#1}}
+\newcommand{\rank}[1]{\mathrm{rank }{#1}}
+\newcommand{\dim}[1]{\mathrm{dim }{#1}}
+
+
+
+\begin{document}
+
+\section*{Insights para o exercício 68 item (ii)}
+\subsection*{Intuição geométrica}
+Reduza o exercício para o caso $U \in R^{2x3}$ e $U = b$.
+Observe que temos 2 equações e 3 incógnitas, ou seja, temos 2 planos no $R^3$.
+
+Agora, temos 2 casos: os planos se interceptam ou são paralelos.
+Dois planos \textbf{nunca} se interceptarão em um ponto, ou seja, não há solução única.
+
+Agora, abstraia essa ideia para uma dimensão a mais: para $R^{3x4}$.
+Não há como 3 hiperplanos se interceptarem em apenas 1 ponto.
+Logo, não há solução única.
+
+
+
+{\subsection*{Caso geral}
+}Seja $U \in R^{M \times N}$ uma matriz escalonada com $n$ linhas não-nulas.
+
+Uma matriz escalonada implica que os vetores linha não-nulos formam uma base para o espaço das linhas de U.
+Ou seja, $\{U_{1,*}, U_{2,*}, \dots, U_{n,*}\}$ é uma base para $\Row{U}$.
+
+Pela definição de posto, $\rank{U} = \dim{\Col{U}}$.
+Mas
+
+
+
+
+# Im U = Col U => veja a definição de multiplicação matrix por vetor genérico e descubra o porque
+
+
+\subsection*{Approach por teorema núcleo-imagem}
+Pelo teorema núcleo-imagem,
+\begin{align*}
+    \dim \mathbb{F}^C = \dim \Null{U} + \dim \Col{U}\\
+    \dim \mathbb{R}^N = \dim \Null{U} + \dim \Col{U}\\
+    N = \dim \Null{U} + n\\
+    \dim \Null{U} = N - n
+\end{align*}
+
+Se essa diferença for 0, então o espaço nulo de $U$ é vazio, logo a função associada a $U$ é injetora, logo existem $U$ e $b$ tal que o espaço solução de $U, b$ tem exatamente 1 elemento.
+
+Em nosso caso, $N = 4$ e $n$, o posto do espaço das linhas, é no máximo 3.
+Isso implica que $\Null{U} > 0$, impossível que $\Null{U}$ seja vazio.
+Então, é impossível que exista apenas 1 solução.
+
+
+
+
+\end{document}
