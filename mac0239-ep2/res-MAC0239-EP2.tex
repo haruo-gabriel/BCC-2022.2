@@ -1,0 +1,111 @@
+\documentclass{article}
+
+% packages
+\usepackage[a4paper]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts,amsmath,amssymb}
+\usepackage{enumerate}
+
+% metadata
+\title{MAC0239 - EP2}
+\author{Gabriel Haruo Hanai Takeuchi - 13671636}
+\date{\the\month/\the\year}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\maketitle
+
+\section*{Questão 1}
+\textit{Apresentar  uma fórmula da LPO  que, quando verdadeira em algum modelo $\mathcal{M} = (\mathcal{A}, \cdot^\mathcal{M})$, força o  domínio $\mathcal{A}$ a ser  infinito; esta fórmula não é verdadeira em modelos com domínio finito.}
+
+\medskip
+Resposta:
+
+A intuição é assumir que todo elemento do domínio tem pelo menos um elemento maior que ele.
+Funciona para os inteiros com a função de potenciação e a ordem parcial $<$.
+\begin{align*}
+	&\varphi: \forall x \exists y ( x^2 < y^2 )\\
+	&\Sigma = \Big( \mathcal{C} = \{\} ,\mathcal{F} = \{ (\cdot ^2)^1\}, \mathcal{P} = \{ <^2 \} \Big)\\
+	&\mathcal{M}:\\
+	&\mathcal{A}: \mathbb{Z}\\
+	&(.^2)^\mathcal{M}: \text{elevado ao quadrado}\\
+	&<^\mathcal{M}: \text{menor}
+\end{align*}
+
+\section*{Questão 2}
+\textit{Apresentar duas fórmula que satisfaçam as seguintes restrições:}
+
+\textit{(a) Uma fórmula que seja verdadeira se e somente se o modelo tiver pelo menos 2 elementos.}
+
+\medskip
+Resposta:
+
+A intuição é diferenciar pelo menos 2 elementos do domínio.
+\begin{align*}
+	\varphi: \forall x \exists y (x \neq y)
+\end{align*}
+
+\textit{(b) Uma fórmula que seja verdadeira sse o modelo tiver pelo menos 4 elementos.}
+
+\medskip
+Resposta:
+
+Agora, a intuição é diferenciar pelo menos 4 elementos do domínio.
+\begin{align*}
+	\varphi: \forall x \exists y \exists z \exists w (x \neq y \wedge x \neq z \wedge x \neq w \wedge y \neq z \wedge y \neq w \wedge z \neq w)
+\end{align*}
+
+\section*{Questão 3}
+\textit{Apresentar uma fórmula que seja verdadeira sse, dado $n \in \mathbb{N}^+$, o modelo possui pelo menos $2n$ elementos.}
+
+\textit{Dica: usar os conectivos generalizados}
+
+\[\bigwedge_{i=1}^{n} \phi_i = \phi_1 \land \ldots \land \phi_n \qquad
+\bigvee_{i=1}^{n} \phi_i = \phi_1 \lor \ldots \lor \phi_n\]
+
+Resposta:
+
+A intuição é garantir a existência de \textbf{pelo menos} $n$ elementos distintos e afirmar que, para cada elemento $x$ desses $n$, existe um que é o dobro de $x$. Como o domínio requisitado é $\mathbb{N}$, então não é necessário mencionar que se $x \neq y$, então $2x \neq 2y$.
+
+\[ \forall x \exists y_1, \dots, y \exists z_1, \dots, z_n \Bigg[ \Big( \bigwedge_{i=1}^{n} x \neq y_i \Big) \wedge \Big( \bigwedge_{j=1}^{n} 2x = z_j  \Big) \Bigg] \]
+
+\section*{Questão 4}
+\textit{Mostrar que se um conjunto de fórmulas garante que o modelo possua pelo menos $2i$ elementos para $i \in [1, n]$, então sempre há um modelo com tamanho par.}
+
+\medskip
+Resposta:
+
+Para essa demonstração, será usada a definição de um número "par". Segue a definição:
+
+\bigskip
+Um número $x \in \mathbb{Z}$ é \textbf{par} se existe $y \in \mathbb{Z}$ tal que $2y = x$.
+\bigskip
+
+Portanto, se for possível mostrar que
+\begin{align*}
+	\forall i \Big( i \in [1, n] \implies \exists x ( 2x = 2i ) \Big)
+\end{align*}
+é verdade, então está demonstrado.
+
+De fato, sempre existe $x$ que satisfaça a sentença acima. Basta adotar $x$ como $i$.
+
+Facilmente conseguimos um modelo que satisfaça o que foi pedido.
+
+Adote um modelo $\mathcal{M}$ com uma assinatura genérica $\Sigma = (\mathcal{C} = \{ c \}, \mathcal{F} = \{ f^1 \}, \mathcal{P} = \{ P \})$ e domínio $\mathcal{A}$ com cardinalidade $2i$. Como $2i$ é sempre par (como provado acima), então $\mathcal{M}$ com certeza é par.
+
+\section*{Questão 5}
+\textit{Mostrar que não existe na Logica de Primeira Ordem uma fórmula que seja verdadeira em todos os modelos com domínio finito e par, e apenas nestes.}
+
+\medskip
+Resposta (baseada cruelmente no slide de compacidade do Finger):
+
+Por contradição, suponha que $\exists \phi$ tal que $\phi$ é verdadeiro $\iff$ o modelo é finito e par, e apenas nestes.
+
+Agora, suponha que $\exists \psi_i$ tal que $\psi_i$ é verdadeiro $\iff$ o domínio $\mathcal{A}$ possui $2i$ elementos. Foi provado na Questão 3 que $\psi$ existe.
+
+Considere o conjunto de fórmulas $\alpha = \{ \phi \} \cup \{ \psi_i \lvert i \in \mathbb{N} \} $. Observe que todo subconjunto finito de $\alpha$ tem modelo. Entretanto, $\alpha$ propriamente dito não tem modelo, já que $\phi$ condiciona que o modelo seja \textbf{finito}, mas $\psi_i$ tende ao \textbf{infinito} pois $i \in \mathbb{N}$ e $\mathbb{N}$ é infinito. Isso fere a compacidade da LPO.
+
+Chegamos em uma contradição, logo a hipótese inicial é falsa.
+
+\end{document}

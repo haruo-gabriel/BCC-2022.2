@@ -1,0 +1,197 @@
+
+\documentclass[11pt,reqno,a4paper]{amsart}
+
+\usepackage{setspace}
+\usepackage[portuguese]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{dsfont}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{systeme}
+
+\allowdisplaybreaks
+
+\usepackage{fullpage}
+\usepackage{setspace}
+
+%newcommands
+\newcommand{\Span}[1]{\mathrm{Span}(#1)}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\inner}[2]{\langle #1,#2 \rangle}
+\newcommand{\norm}[1]{\lVert #1 \rVert}
+
+\def\Assin#1{\noindent\textit{Assinatura}\strut\\%:\\
+\framebox[\textwidth]{Gabriel Haruo Hanai Takeuchi\phantom{\vrule height#1}}}
+
+\begin{document}
+\parindent=0pt
+
+\title{\textsl{MAT0122 Álgebra Linear I}\\\vspace{3\jot}
+  Folha de solução}
+\author[MAT0122 Folha de solução]{}
+
+\maketitle
+\thispagestyle{empty} 
+\pagestyle{plain}
+\onehalfspace
+
+\textbf{Nome: Gabriel Haruo Hanai Takeuchi}\hfill
+\textbf{Número USP: 13671636}\hspace{3cm}\null
+
+\medskip
+\Assin{1cm}
+
+\medskip \textit{Sua assinatura atesta a autenticidade e
+  originalidade de seu trabalho e que você se compromete a seguir o
+  código de ética da USP em suas atividades acadêmicas, incluindo esta
+  atividade.}
+
+\medskip
+\textbf{Exercício: E77}\hfill
+\textbf{Data: 08/12/2022}\hspace{3cm}\null
+
+\noindent\rule{\textwidth}{0.4pt}
+
+\medskip
+\noindent\textbf{SOLUÇÃO}
+
+(i) Let $v_1 = [\alpha_1, \alpha_2, \alpha_3], v_2 = [\beta_1, \beta_2, \beta_3]$.
+
+Then
+\begin{align*}
+    M =
+    \begin{bmatrix}
+        \alpha_1 & \beta_1\\
+        \alpha_2 & \beta_2\\
+        \alpha_3 & \beta_3
+    \end{bmatrix}
+    M^\intercal =
+    \begin{bmatrix}
+        \alpha_1 & \alpha_2 & \alpha_3\\
+        \beta_1 & \beta_2 & \beta_3
+    \end{bmatrix}
+\end{align*}
+The matrix composition $M^\intercal M$ is
+\begin{align*}
+    M^\intercal M = 
+    \begin{bmatrix}
+        \alpha_1 & \alpha_2 & \alpha_3\\
+        \beta_1 & \beta_2 & \beta_3
+    \end{bmatrix}
+    \begin{bmatrix}
+        \alpha_1 & \beta_1\\
+        \alpha_2 & \beta_2\\
+        \alpha_3 & \beta_3
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        \alpha_1^2 + \alpha_2^2 + \alpha_3^2 & \alpha_1 \beta_1 + \alpha_2 \beta_2 + \alpha_3 \beta_3\\
+        \alpha_1 \beta_1 + \alpha_2 \beta_2 + \alpha_3 \beta_3 & \beta_1^2 + \beta_2^2 + \beta_3^2
+    \end{bmatrix}
+    \\
+    =
+    \begin{bmatrix}
+        \lVert v_1 \rVert^2 & \langle a, b \rangle\\
+        \langle a, b \rangle & \lVert v_2 \rVert^2
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        1 & 0\\
+        0 & 1
+    \end{bmatrix}
+    =
+    I_2
+\end{align*}
+
+On the other hand, the matrix composition $M M^\intercal$ is
+\begin{align*}
+    M M^\intercal = 
+    \begin{bmatrix}
+        \alpha_1 & \beta_1\\
+        \alpha_2 & \beta_2\\
+        \alpha_3 & \beta_3
+    \end{bmatrix}
+    \begin{bmatrix}
+        \alpha_1 & \alpha_2 & \alpha_3\\
+        \beta_1 & \beta_2 & \beta_3
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        \alpha_1^2 + \beta_1^2 & \alpha_1 \alpha_2 + \beta_1 \beta_2 & \alpha_1 \alpha_3 + \beta_1 \beta_3\\
+        \alpha_1 \alpha_2 + \beta_1 \beta_2 & \alpha_2^2 + \beta_2^2 &  \alpha_2 \alpha_3 + \beta_2 \beta_3\\
+        \alpha_1 \alpha_3 + \beta_1 \beta_3 & \alpha_2 \alpha_3 + \beta_2 \beta_3 & \alpha_3^2 + \beta_3^2 &\\
+    \end{bmatrix}
+\end{align*}
+
+It is fairly easy to notice that $M^\intercal M \neq M M^\intercal$ because in this particular case the first one is a two sided square matrix and the other one is a three sided square matrix.
+
+\hrulefill
+
+(ii) The matrix multiplication $M^\intercal M$ has the main diagonal composed of inner products of the same vector
+\[
+    \inner{v_i}{v_i}, 1 \leq i \leq n
+\]
+And the other positions composed by inner products of distinct vectors
+\[
+    \inner{v_i}{v_j}, 1 \leq i \neq j \leq n
+\]
+With the fact that these vectors are orthonormal in pairs, then
+\[\inner{v_i}{v_i} = \norm{v_i}^2 = 1 , \inner{v_i}{v_j} = 0 \]
+And therefore,
+\begin{align*}
+    M^\intercal M =
+    \left[
+    \begin{array}{ccc}
+        v_1 \\
+        \hline
+        \dots\\
+        \hline
+        v_n    
+    \end{array}
+    \right]
+    \left[
+    \begin{array}{c|c|c}
+       v_1 & \dots & v_n 
+    \end{array}
+    \right]
+    =
+    \begin{bmatrix}
+        \inner{v_1}{v_1} & \inner{v_1}{v_2} & \dots & \inner{v_1}{v_{n-1}} & \inner{v_1}{v_n}\\
+        \inner{v_2}{v_1} & \inner{v_2}{v_2} & \dots & \inner{v_2}{v_{n-1}} & \inner{v_2}{v_n}\\
+        \vdots\\
+        \inner{v_n}{v_1} & \inner{v_n}{v_2} & \dots & \inner{v_n}{v_{n-1}} & \inner{v_n}{v_n}
+    \end{bmatrix}
+    =
+    I_n
+\end{align*}
+
+The matrix $M M^T$ is indeed $I_n$ too.
+\begin{align*}
+    M M^T =
+    \left[
+    \begin{array}{c|c|c}
+        v_1 & \dots & v_n 
+    \end{array}
+    \right]
+    \left[
+    \begin{array}{ccc}
+        v_1 \\
+        \hline
+        \dots\\
+        \hline
+        v_n    
+    \end{array}
+    \right]
+\end{align*}
+
+
+\endgroup
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% eval: (auto-fill-mode t)
+%%% eval: (LaTeX-math-mode t)
+%%% eval: (flyspell-mode t)
+%%% TeX-master: t
+%%% End:

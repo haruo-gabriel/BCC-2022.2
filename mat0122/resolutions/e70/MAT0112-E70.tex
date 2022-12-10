@@ -43,15 +43,148 @@
   atividade.}
 
 \medskip
-\textbf{Exercício:}\hfill
-\textbf{Data:}\hspace{3cm}\null
-
+\textbf{Exercício: 70}\hfill
+\textbf{Data: 03/12/2022}\hspace{3cm}\null
 \noindent\rule{\textwidth}{0.4pt}
 
 \medskip
 \noindent\textbf{SOLUÇÃO}
 
-\vfill
+(i) Vamos continuar o processo de escalonamento da matriz.
+
+A última matriz do exemplo 7.3.3 é a seguinte:
+\begin{align*}
+\begin{bmatrix}
+	0 & 2 & 4 & 2 & 8\\
+	2 & 1 & 0 & 5 & 4\\
+	0 & 0 & 4 & -5 & -2\\
+	0 & -2.5 & 0 & -10.5 & -2
+\end{bmatrix}
+\end{align*}
+
+Vamos multiplicar a linha 0 por 1.25 e somá-la com a linha 3.
+A matriz associada a essa transformação é a matriz $M_4$ tal que
+\begin{align*}
+	M_4
+	\begin{bmatrix}
+		0 & 2 & 4 & 2 & 8\\
+		2 & 1 & 0 & 5 & 4\\
+		0 & 0 & 4 & -5 & -2\\
+		0 & -2.5 & 0 & -10.5 & -2
+	\end{bmatrix}
+	= 
+	\begin{bmatrix}
+		0 & 2 & 4 & 2 & 8\\
+		2 & 1 & 0 & 5 & 4\\
+		0 & 0 & 4 & -5 & -2\\
+		0 & 0 & 5 & -8 & 8
+	\end{bmatrix}
+	\implies
+	M_4 = 
+	\begin{bmatrix}
+		1 & 0 & 0 & 0\\
+		0 & 1 & 0 & 0\\
+		0 & 0 & 1 & 0\\
+		1.25 & 0 & 0 & 1
+	\end{bmatrix}
+\end{align*}
+
+Agora, vamos multiplicar a linha 2 da matriz transformada por -1.25 e somá-la com a linha 3.
+A matriz associada a essa transformação é a matriz $M_5$ tal que
+\begin{align*}
+	M_5
+	\begin{bmatrix}
+		0 & 2 & 4 & 2 & 8\\
+		2 & 1 & 0 & 5 & 4\\
+		0 & 0 & 4 & -5 & -2\\
+		0 & 0 & 5 & -8 & 8
+	\end{bmatrix}
+	= 
+	\begin{bmatrix}
+		0 & 2 & 4 & 2 & 8\\
+		2 & 1 & 0 & 5 & 4\\
+		0 & 0 & 4 & -5 & -2\\
+		0 & 0 & 0 & -1.75 & 10.5
+	\end{bmatrix}
+	\implies
+	M_5 = 
+	\begin{bmatrix}
+		1 & 0 & 0 & 0\\
+		0 & 1 & 0 & 0\\
+		0 & 0 & 1 & 0\\
+		0  & 0 & -1.25 & 1
+	\end{bmatrix}
+\end{align*}
+
+Conseguimos a matriz desejada.
+
+(ii) A última matriz-transformação no exemplo 7.3.3 é a matriz $M'$ tal que
+\begin{align*}
+	M' =
+	\begin{bmatrix}
+		1 & 0 & 0 & 0\\
+		0 & 1 & 0 & 0\\
+		0.5 & -2 & 1 & 0\\
+		0  & -2.5 & 0 & 1
+	\end{bmatrix}
+\end{align*}
+Após isso, construímos as matrizes $M_4$ e $M_5$ que completam o escalonamento.
+Perceba que ambas são matrizes inversíveis, logo a composição $M_5 \, M_4 \, M'$ também é inversível.
+Isso implica que a multiplicação entre a composição acima e a matriz A do exemplo têm o mesmo espaço das colunas.
+
+Portanto, $M = M_5 \, M_4 \, M'$ e $M A = U$. Segue a matriz $M$ abaixo (usei calculadora online de multiplicação de matrizes, o cálculo deve estar certo - acho).
+\begin{align*}
+	M = 
+	\begin{bmatrix}
+		1 & 0 & 0 & 0\\
+		0 & 1 & 0 & 0\\
+		0.5 & -2 & 1 & 0\\
+		0.625 & 0 & -1.25 & 1
+	\end{bmatrix}
+\end{align*}
+
+\hrulefill
+
+(iii) A matriz $U'$ é a junção da matriz escalonada que obtivemos no item (ii) ao lado da matriz transformação $M$, também de (ii).
+\begin{align*}
+	U' = 
+	\begin{bmatrix}
+		0 & 2 & 4 & 2 & 8 & 1 & 0 & 0 & 0\\
+		2 & 1 & 0 & 5 & 4 & 0 & 1 & 0 & 0\\
+		0 & 0 & 4 & -5 & -2 & 0.5 & -2 & 1 & 0\\
+		0 & 0 & 0 & -1.75 & 10.5 & 0.625 & 0 & -1.25 & 1
+	\end{bmatrix}
+\end{align*}
+
+Ou seja, $B = M$.
+
+\hrulefill
+
+(iv) Não tenho a menor ideia de como provar formalmente, mas tentei no papel e deu certo.
+Algumas observações que tive:
+
+\medskip
+
+Seja a matriz $M_1$ aquela primeira transformação de multiplicar a linha 1 por -2 e somar o resultado à linha 2. 
+\begin{align*}
+	M_1 A' = M_1 \begin{bmatrix}A & I\end{bmatrix} = \begin{bmatrix}M_1 A & M_1 I\end{bmatrix} = \begin{bmatrix}M_1 A & M_1\end{bmatrix}
+\end{align*}
+
+Seja $M_2$ a segunda transformação.
+\begin{align*}
+	M_2 \begin{bmatrix}M_1 A & M_1\end{bmatrix} = \begin{bmatrix}M_2 M_1 A & M_2 M_1 I\end{bmatrix}
+\end{align*}
+
+Eventualmente, temos
+\begin{align*}
+	\begin{bmatrix}M_k \ldots M_1 A & M_k \ldots M_1 I\end{bmatrix} = \begin{bmatrix}M A & M I\end{bmatrix} = \begin{bmatrix}U & M\end{bmatrix}
+\end{align*}
+
+Tudo isso se deve à essa tal propriedade de multiplicação de matrizes aninhadas que
+\begin{align*}
+	M \begin{bmatrix}N & O\end{bmatrix} = \begin{bmatrix}M N & M O\end{bmatrix}
+\end{align*}
+
 
 \endgroup
 \end{document}
