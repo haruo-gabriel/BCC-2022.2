@@ -1,0 +1,79 @@
+
+\documentclass[11pt,reqno,a4paper]{amsart}
+
+\usepackage{setspace}
+\usepackage[portuguese]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{dsfont}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{systeme}
+\usepackage{fullpage}
+\usepackage{setspace}
+\allowdisplaybreaks
+
+%newcommands
+\newcommand{\Span}[1]{\mathrm{Span}(#1)}
+\newcommand{\R}{\mathbb{R}}
+
+\def\Assin#1{\noindent\textit{Assinatura}\strut\\%:\\
+\framebox[\textwidth]{Gabriel Haruo Hanai Takeuchi\phantom{\vrule height#1}}}
+
+\begin{document}
+\parindent=0pt
+
+\title{\textsl{MAT0122 Álgebra Linear I}\\\vspace{3\jot}
+  Folha de solução}
+\author[MAT0122 Folha de solução]{}
+
+\maketitle
+\thispagestyle{empty} 
+\pagestyle{plain}
+\onehalfspace
+
+\textbf{Nome: Gabriel Haruo Hanai Takeuchi}\hfill
+\textbf{Número USP: 13671636}\hspace{3cm}\null
+
+\medskip
+\Assin{1cm}
+
+\medskip \textit{Sua assinatura atesta a autenticidade e
+  originalidade de seu trabalho e que você se compromete a seguir o
+  código de ética da USP em suas atividades acadêmicas, incluindo esta
+  atividade.}
+
+\medskip
+\textbf{Exercício: E78}\hfill
+\textbf{Data: 10/12/2022}\hspace{3cm}\null
+
+\noindent\rule{\textwidth}{0.4pt}
+
+\medskip
+\noindent\textbf{SOLUÇÃO}
+
+Let's assume (because I have no idea how to prove it) the matrix $A \in \mathbb{R}^{m \times n}$ can be factored to be $A = Q R$, where $Q$ is an $m \times n$ column-orthogonal matrix and $R$ is an invertible matrix.
+
+Let's initially consider the equation $A A^{intercal}$.
+As we assumed early, $A = Q R$.
+
+We are going to use the fact that if $A, B$ are matrices, then $(A B)^{\intercal} = B^{\intercal} A^{\intercal}$.
+
+Therefore,
+\begin{align*}
+    A A^{\intercal} &= (Q R) (R^{\intercal} Q^{\intercal})\\
+    &= Q I Q^{\intercal}\\
+    &= Q Q^{\intercal} \\
+    &= I &\text{[By the fact Q is orthonormal, as we've proven in exercise 77]}
+\end{align*}
+
+
+\endgroup
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% eval: (auto-fill-mode t)
+%%% eval: (LaTeX-math-mode t)
+%%% eval: (flyspell-mode t)
+%%% TeX-master: t
+%%% End:

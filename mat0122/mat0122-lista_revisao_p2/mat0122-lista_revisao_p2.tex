@@ -1,0 +1,269 @@
+\documentclass{article}
+\usepackage[portuguese]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{dsfont}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{fullpage}
+\usepackage{setspace}
+\usepackage{hyperref}
+\allowdisplaybreaks
+\setlength{\parindent}{0pt}
+
+% newcommands
+\newcommand{\F}[1]{\mathbb{F}^{#1}}
+\newcommand{\Null}[1]{\textrm{Null } #1}
+%\newcommand{\dim}[1]{\textrm{dim } #1}
+\newcommand{\Col}[1]{\textrm{Col } #1}
+\newcommand{\Row}[1]{\textrm{Row } #1}
+\newcommand{\nullity}[1]{\textrm{nullity } #1}
+\newcommand{\rank}[1]{\textrm{rank } #1}
+\newcommand{\GF}{\textrm{GF(2)}}
+
+\begin{document}
+
+\section*{Questão 1}
+\subsection*{Resolução I}
+Suponha que haja $n+1$ vetores LI em $\F{n}$
+Então, a única maneira de expressar o vetor 0 como combinação linear $\sum_{1 \leq i \leq n+1} \alpha_i v_i = 0$ é se todo $\alpha_i = 0$.
+
+Suponha uma matriz $M \in \F{n \times n+1}$ tal que as colunas de $M$ são os $n+1$ vetores $v_i, \, 1 \leq i \leq n+1$ do enunciado.
+Vamos provar que o espaço nulo da equação abaixo não é trivial.
+\[ M \begin{bmatrix} \alpha_1 \\ \vdots \\ \alpha_{n+1} \end{bmatrix} = 0 \]
+Para isso, usaremos o Rank-Nullity Theorem.
+
+A matrix $M$ pode ser associada à função linear $f: \F{n+1} \to \F{n}$. Logo,
+\begin{align*}
+    \dim \F{n+1} &= \dim \Null{M} + \dim \Col{M}\\
+    n+1 &= \nullity{M}  + \dim \textrm{Row } M\\
+    n+1 &= \nullity{M} + n &\textrm{[ dim Row M é no máximo n ]}\\
+    \nullity{M} &= 1
+\end{align*}
+Provamos que o espaço nulo de $M$ não é trivial.
+Logo, é impossível que os $v_i$ sejam linearmente independentes.
+
+\subsection*{Resolução II}
+É conhecido o fato de que toda a base $B$ para $\F{n}$ tem cardinalidade $n$.
+Logo, todo vetor de $\F{n}$ pode ser representado pela combinação linear de certos $n$ vetores linearmente independentes.
+Em suma, não há mais que $n$ vetores linearmente independentes em $\F{n}$.
+
+
+
+\section*{Questão 2}
+Por hipótese, $M \in \F{n \times n}$ é uma matriz quadrada com $\rank{M} = n$.
+
+Pelo Rank-Nullity Theorem,
+\begin{align*}
+    n = \nullity{M} + \rank{M}\\
+    n = \nullity{M} + n\\
+    \nullity{M} = 0
+\end{align*}
+
+Associe a matriz $M$ com uma função linear $f: \F{n} \to \F{n}$.
+
+Pelo Linear-Function Invertibility Theorem, $f$ é inversível sse $\dim \textrm{Ker }f = 0$ e $\dim \F{n} = \dim \F{n}$.
+
+Já temos que $\nullity{M} = 0$, o que é equivalente a $\dim \textrm{Ker }f = 0$ (critério de injetividade).
+Também temos que $\dim \F{n} = \dim \F{n} = n$ (critério de sobrejetividade).
+
+Logo, $f$ é de fato inversível, e consequentemente $M$ é uma matriz inversível.
+
+
+\section*{Questão 3}
+Seja a matriz escalonada $U \in \F{m \times n}$ com $m_1$ linhas não-nulas e $m_2$ linhas nulas.
+
+Sabendo do fato de que as linhas de uma matriz escalonada formam uma \textbf{base} para o espaço das colunas, então as linhas não-nulas de $U$ são linearmente independentes e $\rank{\Col{U}} = m_1$
+
+Pelo Rank Theorem, $\rank{\Row{U}} = \rank{\Col{U}}$; logo $\rank{\Row{U}} = \rank{\Col{U}} = m_1$.
+\medskip
+
+obs.: O \textbf{rank} diz "quantos vetores linearmente independentes o conjunto possui".
+
+\medskip
+Portanto, também há $m_1$ colunas linearmente independentes em $U$.
+
+
+
+\section*{Questão 4}
+\subsection*{Item i}
+A afirmação é falsa.
+
+Vamos prosseguir com um contra-exemplo em GF(2).
+
+Seja $U \in \GF^2 = \{ [0, 0], [1, 1] \}$ um espaço vetorial.
+
+A condição primordial para que a soma direta $ U \oplus U^0$ exista é se $U \cap U^0 = {0}$, ou seja, se o único vetor em comum entre eles é o vetor nulo.
+
+Por definição, o aniquilador de $U$ é $U^0 = \{ v \in \GF^2 : v \cdot u = 0, \forall u \in U \}$.
+Observe que $U^0 = \{ [0, 0], [1, 1] \}$.
+
+Logo, $U \cap U^0 = {0, [1,1]}$ e a condição de soma direta não é satisfeita.
+
+
+% Suponha que $U$ tenha colunas LD. Logo, a nulidade dessa matriz é maior que 0.
+% Logo, a condição da soma direta dos espaços vetoriais terem apenas o vetor nulo em comum é quebrada.
+% se temos uma matriz com colunas LD, então a nulidade dessa matriz > 0. Argumento: matrix-multiplication definition by
+
+\subsection*{Item ii}\label{q4ii}
+Verdadeiro.
+
+Considere as linhas de uma matriz $A$ tal que seu espaço das colunas seja $U$.
+Note que $U^0$ é o espaço nulo de $A$. Isto pois
+\begin{align*}
+    v \in \Null{A} &\iff A_{1*} (\textrm{linha 1 de A}) \cdot v = 0, A_{*2} \cdot v = 0, ... \\
+    &\iff v \cdot a \,\,\, \forall \,\,\, \textrm{linha de u} \\
+    &\iff v \in U^0
+\end{align*}
+
+Note também que o $\rank{A}$ é a dimensão do espaço das colunas de $A$, e o espaço das colunas de $A$ é $U$, como definimos anteriormente.
+Portanto, $\rank{A} = \dim U$.
+
+Usaremos o Rank-Nullity Theorem:
+\begin{align*}
+    \dim \F{n} = \rank{A} + \dim \Null{A} \\
+    n = \dim U + \dim U^0
+\end{align*}
+
+\subsection*{Item iii}
+Verdadeiro.
+
+Vamos mostrar que existe $U \oplus U^\bot$.
+A condição é se o único vetor em comum entre eles é o vetor nulo.
+
+Suponha que $w$ seja o único vetor em comum. Então $w \in U \oplus$ e $w \in U^\bot$.
+
+Vamos definir $U^\bot = \{ v \in \mathbb{R}^n : u \cdot v = 0, \forall u \in U \}$.
+
+obs.: Grosseiramente, $U^\bot$ é o espaço vetorial dos vetores que são perpendiculares aos de $U$.
+
+Note que se $w$ pertence tanto ao espaço $U$ quanto ao espaço $U^\bot$, então pela definição de $U^\bot$
+\begin{align*}
+    w \cdot w = 0\\
+    \lVert w \rVert^2 = 0
+\end{align*}
+Observe que é necessário que $w = 0$.
+
+Logo, foi provado que o único vetor em comum entre $U$ e $U^\bot$ é de fato o vetor nulo.
+Portanto, existe tal soma direta.
+
+\subsection*{Item iv}
+Verdadeiro.
+
+Seguimos da mesma linha de raciocínio de \nameref{q4ii}.
+
+Volte ao item ii e note que $U^\bot$ é equivalente ao $\Null{A}$, sendo $A$ a matriz com o espaço das colunas $U$.
+
+Segue diretamente do Rank-Nullity Theorem que de fato
+\[ \dim U + \dim U^\bot = n \]
+
+
+
+\section*{Questão 5}
+Sejam as matrizes enunciadas $A \in \F{m \times n}$ e $B \in \F{n \times m}$.
+
+\subsection*{Item i}
+Vamos provar por contradição.
+Suponha que $B$ tenha colunas linearmente dependentes.
+Então é impossível que $B$ tenha o espaço nulo trivial, logo $\nullity{B} > 0$ (falta provar isso).
+
+Pelo Rank-Nullity Theorem,
+\begin{align*}
+    \rank{B} + \nullity{B} = m \\
+    m + \nullity{B} = m \
+    \nullity{B} = 0
+\end{align*}
+Temos uma contradição, pois afirmamos que a nulidade de $B$ é maior que 0.
+
+Logo, $B$ tem colunas linearmente independentes.
+
+\subsection*{Item ii}
+[...]
+
+\section*{Questão 6}
+Nem sempre é verdade que $M M^\intercal$ também seja igual à matriz identidade.
+
+Sabemos que $M^\intercal M = I$. Se também $M M^\intercal = I$, então $M$ é inversível e a própria $M^\intercal$ seria sua inversa.
+Sabemos que uma matriz inversa é sempre quadrada, logo basta que $M$ não seja quadrada para que $M M^\intercal \neq I$.
+
+Para que $M M^\intercal = I_m$, então é necessário que $M$ seja uma matriz ortonormal.
+
+
+\section*{Questão 7}
+[...]
+
+
+\section*{Questão 8}
+\subsection*{item i}
+Vamos provar que $A$ é inversível como uma matriz real.
+
+Observe que a matriz é quadrada e as colunas de $A$ são linearmente independente.
+Logo, $A$ é inversível.
+\medskip
+
+Aprofundando: Seja $f_A: \mathbb{R}^5 \to \mathbb{R}^5$ a função linear associada à matriz $A$.
+A função $f_A$ é inversível sse $\dim \ker f_A = 0$ (injetividade) e $\dim \mathbb{R}^5 = \dim \mathbb{R}^5$ (dimensão do domínio é a dimensão do contradomínio, sobrejetividade).
+
+É fácil de perceber que a dimensão do domínio é igual à dimensão do contradomínio. Falta mostrar que o espaço nulo de $A$ é trivial.
+
+Pelo Rank-Nullity Theorem, 
+\begin{align*}
+    \dim \mathbb{R}^5 = \dim \Col{A} + \dim \Null{A}\\
+    5 = 5 + \dim \Null{A}\\
+    \nullity{A} = 0
+\end{align*}
+
+Logo, $A$ segue o critério de invertibilidade.
+
+
+\subsection*{item ii}
+Vamos provar que $A$ não é inversível como uma matriz sobre GF(2).
+
+Observe que a matriz ainda é quadrada, mas as colunas de $A$ não são linearmente independentes, pois a última coluna pode ser obtida pela soma de todas as outras.
+
+\medskip
+Aprofundando: Seja $f_A: \textrm{GF(2)}^5 \to \textrm{GF(2)}^5$ a função linear associada à matriz $A$.
+A função $f_A$ é inversível sse $\dim \ker f_A = 0$ (injetividade) e $\dim \textrm{GF(2)}^5 = \dim \textrm{GF(2)}^5$ (dimensão do domínio é a dimensão do contradomínio, sobrejetividade).
+
+É fácil de perceber que a dimensão do domínio é igual à dimensão do contradomínio. Falta mostrar que o espaço nulo de $A$ não é trivial.
+
+Pelo Rank-Nullity Theorem, 
+\begin{align*}
+    \dim \textrm{GF(2)}^5 = \dim \Col{A} + \dim \Null{A}\\
+    5 = 4 + \dim \Null{A}\\
+    \nullity{A} = 1
+\end{align*}
+
+Logo, $A$ não é inversível.
+
+
+
+\section*{Questão 9}
+Note que a matriz do enunciado é uma matriz quadrada com a diagonal principal composta de 0's e os outros espaços compostos por 1's.
+
+\subsection*{Item i}
+Vamos provar que $A$ é inversível quando $n$ é par.
+
+Lembremos o critério de inversibilidade:
+\begin{align*}
+    \textrm{A matriz A é inversível } &\iff \textrm{A é quadrada e as colunas de A são LI} \\
+    &\iff \textrm{A é quadrada e } \rank{A} = n \\
+    &\iff \textrm{A é quadrada e } \nullity{A} = 0
+\end{align*}
+
+
+
+\medskip
+
+O primeiro passo é perceber que a matriz é quadrada, então temos meio caminho andado.
+Resta provar que as colunas são linearmente independentes.
+
+
+
+
+\subsection*{Item ii}
+\subsection*{Item iii}
+
+
+
+
+\end{document}

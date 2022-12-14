@@ -1,0 +1,410 @@
+\documentclass[11pt,reqno,a4paper]{amsart}
+
+\usepackage{amsmath,amsthm}
+\usepackage{setspace}
+\usepackage[portuguese]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{datetime}
+\usepackage{xfrac}
+\usepackage{tabularx}
+\usepackage{multicol}
+
+\usepackage{fullpage}
+\usepackage{setspace}
+
+\usepackage{mathtools}
+
+\makeatletter
+\def\@setdate{\datename\ \@date}
+%\def\@setthanks{\def\thanks##1{\par##1}\thankses}
+\def\@setaddresses{\par
+  \nobreak \begingroup
+\footnotesize
+  \def\author##1{\nobreak\addvspace\bigskipamount}%
+  \def\\{\unskip, \ignorespaces}%
+  \interlinepenalty\@M
+  \def\address##1##2{\begingroup
+    \par\addvspace\bigskipamount\indent
+    \@ifnotempty{##1}{(\ignorespaces##1\unskip) }%
+    {\scshape\ignorespaces##2}\par\endgroup}%
+  \def\curraddr##1##2{\begingroup
+    \@ifnotempty{##2}{\nobreak\indent{\itshape Current address}%
+      \@ifnotempty{##1}{, \ignorespaces##1\unskip}\/:\space
+      ##2\par}\endgroup}%
+  \def\email##1##2{\begingroup
+    \@ifnotempty{##2}{\nobreak\indent{\itshape Endereço eletrônico}%
+      \@ifnotempty{##1}{, \ignorespaces##1\unskip}\/:\space
+      \ttfamily##2\par}\endgroup}%
+  \def\urladdr##1##2{\begingroup
+    \@ifnotempty{##2}{\nobreak\indent{\itshape URL}%
+      \@ifnotempty{##1}{, \ignorespaces##1\unskip}\/:\space
+      \ttfamily##2\par}\endgroup}%
+  \addresses
+  \endgroup
+}
+\def\datename{\textit{Data}:}
+\makeatother
+
+\let\:=\colon
+\let\epsilon=\varepsilon
+
+\def\CC{{\mathbb C}}
+\def\RR{{\mathbb R}}
+\def\FF{{\mathbb F}}
+
+\def\bfa{\mathbf{a}}
+\def\bfb{\mathbf{b}}
+\def\bfc{\mathbf{c}}
+\def\bfd{\mathbf{d}}
+\def\bfe{\mathbf{e}}
+\def\bff{\mathbf{f}}
+\def\bfi{\mathbf{i}}
+\def\bfj{\mathbf{j}}
+\def\bfp{\mathbf{p}}
+\def\bfu{\mathbf{u}}
+\def\bfv{\mathbf{v}}
+\def\bfw{\mathbf{w}}
+\def\bfx{\mathbf{x}}
+\def\bfy{\mathbf{y}}
+\def\bfX{\mathbf{X}}
+\def\bfdelta{\boldsymbol\delta}
+\def\bfzero{\mathbf{0}}
+\def\dsone{\mathds{1}}
+
+\def\({\left(}
+\def\){\right)}  
+\def\<{\langle}
+\def\>{\rangle}
+
+\def\Null{\mathop{\rm Null}}
+\def\Ker{\mathop{\rm Ker}}
+\def\Span{\mathop{\rm Span}}
+\def\Aff{\mathop{\rm Aff}}
+\def\GF{\mathop{\rm GF}}
+
+\usepackage{enumitem}
+\def\rmlabel{\upshape({\itshape \roman*\,})}
+\def\RMlabel{\upshape(\Roman*)}
+\def\alabel{\upshape({\itshape \alph*\,})}
+\def\Alabel{\upshape({\itshape \Alph*\,})}
+\def\nlabel{\upshape({\itshape \arabic*\,})} 
+\newcommand\nlabelQ{\bf\upshape Q\arabic*}
+
+\def\exemplo{\textbf{Exemplo.} }
+\let\Exemplo\exemplo
+
+\let\phi\varphi
+\let\epsilon\varepsilon
+\let\.\verb
+\def\mystrut{\vrule height20pt depth12pt width0pt}
+
+\newsymbol\nleq 2302
+
+\def\resp#1{\noindent\textit{Resp.}: \framebox{\strut\hbox to #1{}}}
+\def\respp#1#2{\noindent\textit{Resp.}: \framebox{\strut\hbox
+      to #1{\hfill#2\hfill}}}
+\def\Resp#1{\noindent\textit{Resposta}:\strut\\
+  \framebox[.87\textwidth]{\phantom{\vrule height#1}}}
+\def\Respcont#1{\noindent\textit{Resposta} (continuação):\strut\\
+  \framebox[.87\textwidth]{\phantom{\vrule height#1}}}
+\def\Respp#1#2{\noindent\textit{Resposta}:\strut\\
+  \framebox[.87\textwidth]{#2\phantom{\vrule depth#1}}}
+\def\Just#1{\noindent\textit{Justificativa}:\strut\\
+\framebox[.87\textwidth]{\phantom{\vrule height#1}}}
+\def\Assin#1{\noindent\textit{Assinatura}\strut:\\
+\framebox[\textwidth]{\phantom{\vrule height#1}}}
+
+\def\Draft#1{\noindent\textit{Rascunho}:\strut\\
+  \framebox[.87\textwidth]{\phantom{\vrule height#1}}}
+
+\def\sugestao#1{[\textit{Sugestão.} #1]}
+\let\hint\sugestao
+\def\observacao#1{[\textit{Observação.} #1]}
+\let\NB\observacao
+
+\begin{document}
+\parindent=0pt
+
+\title[MAC0122 Álgebra Linear I]%
+{Álgebra Linear~I\\
+  \bigskip\bigskip{\bf\textit{2$^{\text{\tiny o}}$ Semestre de 2022}}\\
+  \bigskip\bigskip Exercícios de revisão para a P2
+}  
+
+\shortdate
+\yyyymmdddate
+\settimeformat{ampmtime}
+\def\today{\number\year/\number\month/\number\day}
+\date{\today, \currenttime}
+\footskip=28pt
+
+%\onehalfspace
+\maketitle
+\thispagestyle{empty} 
+\pagestyle{plain}
+%\doublespace
+\onehalfspace
+
+\noindent
+Estes são uns exercícios de revisão para a segunda prova.  As
+perguntas nos \textit{review questions} de \textbf{PNK} (Capítulos~6,
+7, 8, 9 e~12) devem também ser revisados.
+
+\medskip
+\bigskip
+
+\begin{enumerate}[label=\nlabelQ]\itemsep8pt
+
+\item Prove o seguinte fato: não há $n+1$ vetores linearmente
+  independentes em~$\FF^n$.  Procure dar uma prova simples e completa,
+  que dependa o menos possível de fatos provados na disciplina (ou
+  inclua a prova dos fatos que você usar, para sua prova ficar
+  completa). 
+
+\item Prove o seguinte fato: se~$M$ é uma matriz quadrada $n\times n$
+  com posto~$n$, então~$M$ é inversível.  Procure dar uma prova
+  simples e completa, que dependa o menos possível de fatos provados
+  na disciplina (ou inclua a prova dos fatos que você usar, para sua
+  prova ficar completa).
+
+\item Seja $U\in\FF^{m\times n}$ uma matriz na forma escalonada,
+  com~$m_1$ linhas não-nulas e~$m_2$ linhas nulas (naturalmente,
+  $m=m_1+m_2$).  Quantas \textit{colunas} linearmente independentes
+  tem a matriz~$U$?
+
+\item Para cada uma das afirmações abaixo, diga se ela é verdadeira ou
+  não.  Em cada caso, justifique sua resposta.
+  \begin{enumerate}[label=\rmlabel]
+  \item Seja $U\subset\FF^n$ um espaço vetorial.  Vale que
+    $\FF^n=U\oplus U^\circ$.
+  \item Seja $U\subset\FF^n$ um espaço vetorial.  Vale que
+    $\dim U+\dim U^\circ=n$.
+  \item Seja $U\subset\RR^n$ um espaço vetorial e
+    $\<\,\cdot\,,\,\cdot\,\>$ um produto interno em~$\RR^n$.  Vale que
+    $\RR^n=U\oplus U^\perp$.
+  \item Seja $U\subset\RR^n$ um espaço vetorial e
+    $\<\,\cdot\,,\,\cdot\,\>$ um produto interno em~$\RR^n$.  Vale que
+    $\dim U+\dim U^\perp=n$.
+  \end{enumerate}
+
+\item Suponha que as matrizes $A\in\FF^{m\times n}$ e
+  $B\in\FF^{n\times m}$ são tais $AB=I_m$, onde~$I_m\in\FF^{m\times
+    m}$ é a matriz identidade. 
+  \begin{enumerate}[label=\rmlabel]
+  \item Prove que as colunas de~$B$ são linearmente independentes. 
+  \item Prove que as colunas de~$A$ geram~$\FF^m$.
+  \end{enumerate}
+
+\item Seja $M$ uma matriz tal que $M^\top M$ é a matriz identidade.  É
+  verdade que $MM^\top$ é a matriz identidade?  Por quê?  Há alguma
+  hipótese simples sobre~$M$ que garanta a resposta positiva?
+  
+\item Fixe $b_1\in\GF(2)$ e~$b_2\in\GF(2)$ e considere `bitstrings'
+  $\bfx=(x_1,\dots,x_6)\in\GF(2)^6$.  Tais bitstrings~$\bfx$ são
+  chamados do tipo~$(b_1,b_2)$ se $x_1+x_3+x_5=b_1$ e
+  $x_2+x_4+x_6=b_2$.  Quantos bitstrings do tipo~$(b_1,b_2)$ existem?
+  
+\item Considere a matriz
+  \begin{equation}
+    \label{eq:cycle}
+    A=
+    \begin{bmatrix}
+      1&0&0&0&1\\
+      1&1&0&0&0\\
+      0&1&1&0&0\\
+      0&0&1&1&0\\
+      0&0&0&1&1\\
+    \end{bmatrix}
+  \end{equation}    
+  \begin{enumerate}[label=\rmlabel]
+  \item Prove que~$A$ é inversível como uma matriz real.
+  \item Prove que~$A$ não é inversível como uma matriz
+    sobre~$\GF(2)$.
+  \end{enumerate}
+
+\item Considere a
+  matriz~$A_n=(a_{ij})_{1\leq i,j\leq n}\in\GF(2)^{n\times n}$ com
+  \begin{equation}
+    \label{eq:4}
+    a_{ij}=
+    \begin{cases}
+      0 &\text{ se }i=j\\
+      1 &\text{ caso contrário}.
+    \end{cases}
+  \end{equation}
+  \begin{enumerate}[label=\rmlabel]
+  \item Prove que~$A$ é inversível no caso em que~$n$ é par.
+  \item Prove que~$A$ não é inversível no caso em que~$n$ é ímpar.
+  \item Prove que~$A$ tem posto~$n-1$ no caso em que~$n$ é ímpar.
+  \end{enumerate}
+
+\item\label{Q:invert} Seja~$A\in\FF^{n\times n}$ uma matriz quadrada.
+  Monte a matriz
+  \begin{equation}
+    \label{eq:AI}
+    A'=
+    \begin{bmatrix}
+      A&I_n
+    \end{bmatrix},
+  \end{equation}
+  onde~$I_n\in\FF^{n\times n}$ é a matriz identidade.  Suponha que
+  executamos operações de escalonamento, e conseguimos
+  transformar~$A'$ na matriz
+  \begin{equation}
+    \label{eq:IA}
+    \begin{bmatrix}
+      I_n&B
+    \end{bmatrix}.
+  \end{equation}
+  Note que não apenas escalonamos~$A$, mas prosseguimos o processo
+  até obter a identidade~$I_n$ (é fácil ver que isso é possível de
+  se fazer caso obtenhamos no processo de escalonamento de~$A$ uma
+  matriz~$U$ que tem todos seus elementos diagonais não nulos).
+  Prove que~$B$ é a inversa de~$A$.  \NB{Esse fato sugere um
+    algoritmo para se inverter~$A$.}
+
+\item Suponha que executamos o algoritmo sugerido na
+  Questão~\ref{Q:invert} para inverter uma matriz~$A$, mas a matriz
+  escalonada que obtemos no meio do processo é tal que há zeros na
+  diagonal.  Prove que~$A$ não é inversível.
+    
+\item Considere a equação $A\bfx=\bfb$ sobre~$\GF(2)$, onde
+  \begin{equation}
+    \label{eq:3}
+    A=
+    \begin{bmatrix}
+      1&0&0&1\\
+      1&1&1&1\\
+      0&1&1&1\\
+      1&1&1&0
+    \end{bmatrix},\quad
+    \bfx=
+    \begin{bmatrix}
+      x_1\\
+      x_2\\
+      x_3\\
+      x_4
+    \end{bmatrix}\text{\; e \;}
+    \bfb=
+    \begin{bmatrix}
+      1\\
+      0\\
+      1\\
+      1
+    \end{bmatrix}.    
+  \end{equation}
+  Prove que esta equação não tem solução, considerando o vetor
+  $\bfy=[1\;0\;1\; 1]^\top\in\GF(2)^4$.  \hint{Multiplique
+    por~$\bfy^\top$.}
+  
+\item Considere a equação $U\bfx=\bfb$, onde~$U\in\FF^{m\times n}$ é
+  uma matriz escalonada e~$\bfb=[b_1\;\dots\;b_m]^\top\in\FF^m$.
+  Suponha que~$U$ tenha~$m_1$ linhas não-nulas e~$m_2$ linhas nulas
+  (naturalmente $m=m_1+m_2$).  Prove que $U\bfx=\bfb$ admite uma
+  solução se e só se $b_{m_1+1}=\dots=b_m=0$.
+
+\item Considere a equação $A\bfx=\bfb$, onde $A\in\FF^{m\times n}$
+  e~$\bfb\in\FF^m$.  Considere as duas afirmações abaixo:
+  \begin{enumerate}
+  \item[(A)] A equação $A\bfx=\bfb$ admite solução (isto é, existe
+    $\bfx_0\in\FF^n$ tal que $A\bfx_0=\bfb$).
+  \item[(B)] Existe $\bfy\in\FF^m$ tal que $\bfy^\top A=\bfzero$ e
+    $\bfy^\top\bfb\neq0$. 
+  \end{enumerate}
+  Prove os seguintes dois fatos:
+  \begin{enumerate}[label=\rmlabel]
+  \item As afirmações~(A) e~(B) não podem valer simultaneamente.
+  \item Necessariamente, ou a afirmação~(A) vale ou a afirmação~(B)
+    vale.
+  \end{enumerate}
+
+\item Sejam $\bfu_1,\dots,\bfu_n\in\RR^n$ vetores dois a dois
+  ortogonais e seja $\bfu=\sum_{1\leq i\leq n}\bfu_i$.  Prove que
+  \begin{equation}
+    \label{eq:2}
+    \|\bfu\|^2=\sum_{1\leq i\leq n}\|\bfu_i\|^2.
+  \end{equation}
+  
+\item Seja
+    \begin{equation}
+    \label{eq:H4}
+    H={1\over2}
+    \begin{bmatrix*}[r]
+      1&1&1&1\\
+      1&-1&1&-1\\
+      1&1&-1&-1\\
+      1&-1&-1&1\\
+    \end{bmatrix*}, 
+  \end{equation}
+  e sejam $\bfb_1,\dots,\bfb_4\in\RR^4$ as colunas de~$H$.  Assim
+  $H=[\bfb_1\mid\dots\mid\bfb_4]$.
+  Seja~$V=\Span\{\bfb_2,\bfb_3,\bfb_4\}$ e
+  $\bfe_1=[1\;0\; 0\; 0]^\top\in\RR^4$.  Encontre a projeção ortogonal
+  \textit{sobre}~$V$ de~$\bfe_1$ e a projeção ortogonal \textit{a}~$V$
+  de~$\bfe_1$.  Isto é, encontre $\bfe_1^{\parallel V}$
+  e~$\bfe_1^{\perp V}$ de forma que
+  $\bfe_1=\bfe_1^{\parallel V}+\bfe_1^{\perp V}$,
+  $\bfe_1^{\parallel V}\in V$ e~$\<\bfe_1^{\perp V},\bfv\>=0$ para
+  todo~$\bfv\in V$.
+  
+\item Sejam $\bfa_1,\dots,\bfa_m$ vetores em~$\RR^n$.  Suponha que
+  $\bfx\in\RR^n$ é tal que $\<\bfx,\bfb\>=0$ para todo $\bfb\in\RR^n$
+  tal que $\<\bfa_i,\bfb\>=0$ para todo $1\leq i\leq m$.  Prove que
+  $\bfb\in\Span\{\bfa_1,\dots,\bfa_m\}$. 
+
+\item Considere o sistema linear $A\bfx=\bfb$, onde
+  $A\in\RR^{m\times n}$ e~$\bfb\in\RR^m$.  Queremos
+  encontrar~$\hat\bfx\in\RR^n$ tal que
+  \begin{equation}
+    \label{eq:1}
+    \|A\hat\bfx-\bfb\|=\min\{\|A\bfx-\bfb\|\:\bfx\in\RR^n\}.
+  \end{equation}
+  \begin{enumerate}[label=\rmlabel]
+  \item Diga por que podemos supor que as colunas de~$A$ são
+    linearmente independentes.  Nos itens a seguir, supomos que as
+    colunas de~$A$ são linearmente independentes.
+  \item Prove que~$A^\top A$ é inversível.
+  \item Prove que~$\hat\bfx=(A^\top A)^{-1}A^\top\bfb$
+    satisfaz~\eqref{eq:1}. 
+  \end{enumerate}
+  
+\item Sejam
+  \begin{equation}
+    \label{eq:F}
+    A=
+    \begin{bmatrix}
+      1&1\\
+      1&0\\
+    \end{bmatrix}\text{\; e \;}
+    \bfu_0=
+    \begin{bmatrix}
+      0\\
+      1\\
+    \end{bmatrix}.
+  \end{equation}
+  Defina $\bfu_t$ ($t\geq1$) pondo $\bfu_t=A\bfu_{t-1}$.  Defina~$F_t$
+  ($t\geq0$) pondo $F_t=t$ para~$t=0$ e~$t=1$ e $F_t=F_{t-1}+F_{t-2}$
+  para~$t\geq2$.
+  \begin{enumerate}[label=\rmlabel]
+  \item Prove que $\bfu_t=[F_t\;\;F_{t-1}]^\top$ para todo~$t\geq1$.
+  \item Deduza que, para todo~$t\geq0$, 
+    \begin{equation}
+      \label{eq:5}
+      F_t={1\over\sqrt5}\(\phi_1^t-\phi_2^t\), 
+    \end{equation}
+    onde~$\phi_1=(1+\sqrt5)/2$ e~$\phi_2=(1-\sqrt5)/2$.
+  \end{enumerate}
+
+  
+\end{enumerate}
+
+\endgroup
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% eval: (auto-fill-mode t)
+%%% eval: (LaTeX-math-mode t)
+%%% eval: (flyspell-mode t)
+%%% TeX-master: t
+%%% End:

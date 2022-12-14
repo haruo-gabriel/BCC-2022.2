@@ -8,11 +8,9 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{systeme}
-
-\allowdisplaybreaks
-
 \usepackage{fullpage}
 \usepackage{setspace}
+\allowdisplaybreaks
 
 %newcommands
 \newcommand{\Span}[1]{\mathrm{Span}(#1)}
@@ -165,24 +163,29 @@ And therefore,
     I_n
 \end{align*}
 
-The matrix $M M^T$ is indeed $I_n$ too.
-\begin{align*}
-    M M^T =
-    \left[
-    \begin{array}{c|c|c}
-        v_1 & \dots & v_n 
-    \end{array}
-    \right]
-    \left[
-    \begin{array}{ccc}
-        v_1 \\
-        \hline
-        \dots\\
-        \hline
-        v_n    
-    \end{array}
-    \right]
-\end{align*}
+The matrix $M M^T$ is indeed $I_n$, too.
+
+The argument that will be used consists on definitions and consequences of invertible matrices.
+
+By hypothesis, the vectors are mutually orthogonal and their norms equals 1.
+By Proposition 9.5.1 of PNK, those vectors are linearly independent.
+Therefore, the columns of the square matrix M are linearly independent.
+
+By Corollary 6.4.10, if a matrix A is square and their columns are linearly independent, then A is invertible.
+So M is invertible.
+
+By Corollary 6.4.11, the transpose of an invertible matrix is invertible. Therefore $M^\intercal$ is invertible.
+
+%faltou falar que M^T = M^-1
+By Corollary 9.7.3, if $Q$ is an orthogonal matrix then its inverse is its transpose $Q^\intercal$.
+Therefore, $M^{\intercal} = M^{-1}$.
+
+
+By Lemma 4.13.11, if a $R \times C$ matrix $A$ has an inverse $A^{-1}$ then $A A^{-1}$ is the $R \times R$ identity.
+Therefore, $M M^\intercal = I_n$. 
+
+
+
 
 
 \endgroup
