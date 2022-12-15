@@ -8,11 +8,12 @@ mac0239-ep1/ep1_gabriel_haruo_hanai_takeuchi/minisat/
 
 # python files and directories
 **/__pycache__/
-*:Zone.Identifier
+**/*:Zone.Identifier
 
 # LaTex Workshop compiling files
 *.aux
 *.fdb_latexmk
 *.fls
 *.log
+*.out
 *.synctex.gz
