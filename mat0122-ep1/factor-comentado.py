@@ -17,7 +17,7 @@ def find_candidates(N, primeset):
 
     len_primeset = len(primeset) + 1
     len_roots = 0
-    x = intsqrt(N) + 2
+    x = intsqrt(N)+2
 
     while len_roots < len_primeset:
         factors_of_x = dumb_factor(x**2 - N, primeset)
@@ -71,9 +71,9 @@ def transformation_rows(rowlist_input, col_label_list = None):
 def find_a_and_b(v, roots, N):
     alist = [roots[x] for x in v.D if v[x] != 0]
     a = prod(alist)
-    c = prod([x**2 - N for x in alist])
+    c = prod({x**2 - N for x in alist})
     b = intsqrt(c)
-    assert (b**2 == c)
+    assert (b*b == c)
     return a, b
 
 
@@ -81,7 +81,13 @@ def main():
     modo_verborragico = 0
 
     # Inputs
-    len_inputs = len(sys.argv)
+    len_inputs = len(sys.argv) #conta quantos argumentos o usuário inseriu na linha de comando, incluindo o nome do arquivo
+    # exemplo: python3 factor.py 12345 50000 çlkasdjf
+    # sys.argv[0] == 'factor.py'
+    # sys.argv[1] == '12345'
+    # sys.argv[2] == '50000'
+    # sys.argv[3] == 'çlkasdjf'
+    # lembrando que todos esses argumentos são strings por padrão, então converta-os para int
     N = int(sys.argv[1]) 
     U = int(sys.argv[2]) if len_inputs >= 3 else 10000
     if len_inputs >= 4:
@@ -91,15 +97,14 @@ def main():
     primelist = primes(U)
     roots, rowlist = find_candidates(N, primelist)
     M_rows, n_zero_rows = transformation_rows(rowlist, sorted(primelist, reverse=True))
-    len_M_rows = len(M_rows) 
+    len_M_rows = len(M_rows) # retorna um int da quantidade de elementos na lista M_rows
 
-    for i in reversed(range(len_M_rows)): 
+    for i in reversed(range(len_M_rows)): # range(len_M_rows) cria uma lista de 1 a len_M_rows; reverse(.) cria outra lista de len_M_rows a 1 (ordem decrescente) 
         a, b = find_a_and_b(M_rows[i], roots, N)
         
         if modo_verborragico == 1:
-            print(f"{len_M_rows - i - 1}: a = {a} / b = {b}")
+            print(f"{len_M_rows - i - 1}: a = {a} / b = {b}") # como i está iterando em ordem decrescente, então tem que fazer esse truquezinho aí pra printar em ordem crescente
 
-        n_zero_rows -= 1
         gcdiv = gcd(a - b, N)
         if gcdiv == 1:
             print("Failed")
@@ -107,6 +112,7 @@ def main():
         elif gcdiv != N:
             print(f"factor = {gcdiv}")
             break
+        n_zero_rows -= 1
 
 
 if __name__ == "__main__":
