@@ -5,6 +5,7 @@ it includes source codes from:
 
 ### MAT0122 - Álgebra Linear
 * [EXs: resolutions to Yoshiharu's "Exercicios.pdf"](/mat0122)
+* [EP1: factoring integers](/mat0122-ep1)
 ### MAC0121 - Algoritmos e Estruturas de Dados I
 * [EP1: Collatz conjecture observations](/mac0121-ep1)
 * [EP2: crossword puzzle solver](/mac0121-ep2)
