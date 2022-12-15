@@ -10,9 +10,9 @@ def root_method(N):
 	#for i in range(10):
 	while True:
 		#print(f"a = {a}")
-		b = sqrt(a**2 - N)
+		b = intsqrt(a**2 - N)
 		#print(f"b = {b}")
-		if(b == int(b)):
+		if(b *b == x):
 			#print(f"a - b = {a-b}")
 			return int(a - b)
 		else:
