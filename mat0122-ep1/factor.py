@@ -1,9 +1,9 @@
 #------------------------------------------------------------------------------
 # # MAT0122 ÁLGEBRA LINEAR I
-# Aluno: <NOME COMPLETO>
-# Numero USP: <NUSP>
-# Tarefa: <Identificação do exercício>
-# Data: <DATA>
+# Aluno: <GABRIEL HARUO HANAI TAKEUCHI>
+# Numero USP: <13671636>
+# Tarefa: <EP1>
+# Data: <16/12/2022>
 # 
 # Baseado em ... (breve e se aplicável)
 # 
