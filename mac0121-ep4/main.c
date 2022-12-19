@@ -6,18 +6,21 @@
 /* Cria um índice remissivo das palavras de um texto */
 
 int main() {
-	no *index = NULL; /* começo da árvore */
+	noABB *raiz = NULL; /* começo da árvore */
 	char palavra[100];
 	int linha = 1;
 
+	/*arrumar a leitura de linhas*/
 	while (scanf("%[A-Za-z]%*[^a-zA-Z]", palavra) > 0){
-		index = insere(index, palavra, linha);
-		linha++;
+		printf("palavra: %s\n", palavra);
+		raiz = insereABB(raiz, palavra, linha);
+		if (palavra[strlen(palavra)] == "\n")
+			linha++;
 	}
 
-	preordem(index);
+	preordemABB(raiz);
 
-	destroi(index);
+	destroi(raiz);
 
 	return 0;
 }
