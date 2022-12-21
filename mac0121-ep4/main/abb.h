@@ -14,7 +14,7 @@ typedef struct celABB {
 
 noABB *insereABB (noABB *raiz, char *palavra, int linha);
 noIND *insereLinhas (noIND *info, int linha);
-noABB *buscaABB (noABB *raiz, char *palavra);
-void destroi (noABB *raiz);
-void preordemABB (noABB *raiz);
-void preordemIND (noIND *raiz);
+void destroiABB (noABB *raiz);
+void destroiIND (noIND *info);
+void inordemABB (noABB *raiz);
+void inordemIND (noIND *info);
