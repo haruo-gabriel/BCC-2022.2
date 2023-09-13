@@ -1,17 +1,18 @@
-# BCC-2022.2
-all files from the second semester of 2022.
+# bcc2022ii
 
-it includes source codes from:
+todos os projetos do segundo semestre de 2022.
+
+inclui códigos-fonte de:
 
 ### MAT0122 - Álgebra Linear
-* [EXs: resolutions to Yoshiharu's "Exercicios.pdf"](/mat0122)
-* [EP1: factoring integers](/mat0122-ep1)
+* [EXs: resoluções dos "Exercicios.pdf"](/mat0122)
+* [EP1: fatorando inteiros](/mat0122-ep1)
 ### MAC0121 - Algoritmos e Estruturas de Dados I
-* [EP1: Collatz conjecture observations](/mac0121-ep1)
-* [EP2: crossword puzzle solver](/mac0121-ep2)
-* [EP3: sorting algorithms statistics](mac0121-ep3)
+* [EP1: conjectura de Collatz](/mac0121-ep1)
+* [EP2: solucionador de palavra-cruzada](/mac0121-ep2)
+* [EP3: estatísticas de algoritmos de ordenação](mac0121-ep3)
 ### MAC0239 - Lógica e Verificação de Programas
-* [EP1: Mastermind solver with MiniSAT](/mac0239-ep1)
-* [EP2: a proof in first order logic](/mac0239-ep2)
-### MAC0216 - Técnicas de Programação I (deprecated)
-* [EP1: prime numbers operations in assembly x86_64](/mac0216-ep1)
+* [EP1: Mastermind solver com MiniSAT](/mac0239-ep1)
+* [EP2: uma prova em lógica de primeira ordem](/mac0239-ep2)
+### MAC0216 - Técnicas de Programação I (não-finalizado)
+* [EP1: operações com números primos em assembly x86_64](/mac0216-ep1)
